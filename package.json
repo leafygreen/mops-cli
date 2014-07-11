@@ -23,6 +23,7 @@
     "node-mms-client": "0.0.0",
     "commander": "2.2.0",
     "prompt": "0.2.13",
-    "cli-table": "^0.3.0"
+    "cli-table": "^0.3.0",
+    "q": "^1.0.1"
   }
 }
