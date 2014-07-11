@@ -1,0 +1,26 @@
+{
+  "name": "mms-cli",
+  "version": "0.0.0",
+  "description": "A command-line application to perform MMS tasks",
+  "bin": {
+    "mms": "bin/mms"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/leafygreen/mms-cli.git"
+  },
+  "keywords": [
+    "mms",
+    "cli"
+  ],
+  "author": "dennis.kuczynski@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/leafygreen/mms-cli/issues"
+  },
+  "homepage": "https://github.com/leafygreen/mms-cli",
+  "dependencies": {
+    "node-mms-client": "0.0.0",
+    "commander": "2.2.0"
+  }
+}
