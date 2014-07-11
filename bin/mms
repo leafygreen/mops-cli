@@ -2,4 +2,10 @@
 
 'use strict';
 
-console.log("Hello World");
+var program = require('commander');
+
+program
+  .version('0.0.0')
+  .command('login [name]', 'Store MMS username and api key.')
+  .command('topology [group]', 'Output MMS Topology for group')
+  .parse(process.argv);

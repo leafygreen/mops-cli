@@ -1,0 +1,47 @@
+#!/usr/bin/env node
+
+'use strict';
+
+var program = require('commander');
+var prompt = require('prompt');
+
+program
+  .option('-u, --user [username]', 'MMS Username')
+  .option('-a, --apiKey [apiKey]', 'MMS API Key')
+  .parse(process.argv);
+
+var user = program.user;
+var apiKey = program.apiKey;
+var requiredFields = [];
+if (!user) {
+    requiredFields.push('user');
+}
+if (!apiKey) {
+    requiredFields.push('apiKey');
+}
+
+if (requiredFields.length > 0) {
+    prompt.message = "Required Field";
+    prompt.start();
+    prompt.get(requiredFields, function (err, result) {
+        if (err) {
+            console.log("An error occurred");
+        } else {
+            if (!user) {
+                user = result.user;
+            }
+            if (!apiKey) {
+                apiKey = result.apiKey;
+            }
+            login(user, apiKey);
+        }
+    });
+} else {
+    login(user, apiKey);
+}
+
+function login(user, apiKey) {
+    console.log("Attempting to login to MMS");
+    console.log("User: "+user);
+    console.log("API Key: "+apiKey);
+}

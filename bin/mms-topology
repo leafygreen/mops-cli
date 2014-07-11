@@ -1,0 +1,59 @@
+#!/usr/bin/env node
+
+'use strict';
+
+var program = require('commander');
+var prompt = require('prompt');
+var Table = require('cli-table');
+
+program
+  .option('-g, --groupId [groupId]', 'MMS Group ID')
+  .parse(process.argv);
+
+var groupId = program.groupId;
+var requiredFields = [];
+if (!groupId) {
+    requiredFields.push('groupId');
+}
+
+if (requiredFields.length > 0) {
+    prompt.message = "Required Field";
+    prompt.start();
+    prompt.get(requiredFields, function (err, result) {
+        if (err) {
+            console.log("An error occurred");
+        } else {
+            if (!groupId) {
+                groupId = result.groupId;
+            }
+            topology(groupId);
+        }
+    });
+} else {
+    topology(groupId);
+}
+
+function topology(groupId) {
+    var table = new Table({
+        head: ['Type', 'Name', 'Last Ping', 'Version', 'Attributes']
+    });
+
+    table.push(
+        ['Cluster', 'Cluster Music', '', '2.4.10', '2 shards, 1 config, 1 mongos'],
+            ['  Replica Set', 'Robin', '', '2.4.10', '3 mongods'],
+                ['    Member', 'ec2-184-73-95-149.compute-1.amazonaws.com:27017', '1 min ago', '2.4.10', 'Primary'],
+                ['    Member', 'ec2-184-73-95-150.compute-1.amazonaws.com:27017', '1 min ago', '2.4.10', 'Secondary'],
+                ['    Member', 'ec2-184-73-95-151.compute-1.amazonaws.com:27017', '1 min ago', '2.4.10', 'Secondary'],
+            ['  Config', 'ec2-184-73-95-152.compute-1.amazonaws.com:27017', '1 min ago', '2.4.10', ''],
+            ['  Mongos', 'ec2-184-73-95-153.compute-1.amazonaws.com:27017', '1 min ago', '2.4.10', ''],
+        
+        ['Replica Set', 'Robin', '', '2.6.3', '3 mongods'],
+            ['  Member', 'ec2-184-72-95-149.compute-1.amazonaws.com:27017', '1 min ago', '2.6.3', 'Primary'],
+            ['  Member', 'ec2-184-72-95-150.compute-1.amazonaws.com:27017', '1 min ago', '2.6.3', 'Secondary'],
+            ['  Member', 'ec2-184-72-95-151.compute-1.amazonaws.com:27017', '1 min ago', '2.6.3', 'Secondary'],
+        
+        ['Standalone', 'ip-10-60-97-75:27017', '1 min ago', '2.4.11', '']
+    );
+
+    console.log(table.toString());
+}
