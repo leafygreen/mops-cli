@@ -8,9 +8,9 @@ A command-line interface for performing [MongoDB Management Service](https://mms
 TODO
 
 
-## Download with NPM
+## Install with NPM
 
-`npm install node-mms-client`
+`npm install node-mms-client -g`
 
 * https://www.npmjs.org/package/mms-cli
 
