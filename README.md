@@ -5,36 +5,14 @@ A command-line interface for performing [MongoDB Management Service](https://mms
 
 ## Documentation
 
-### Login
-```
-mms login -u myUsername -a myApiKey
+TODO
 
-or
+See
 
-mms login -user myUsername -apiKey myApiKey
+`mms --help`
 
-or (with prompt)
+![Topology Screenshot](http://i58.tinypic.com/nqrzvr.png)
 
-mms login
-Required Field: user:  myUser
-Required Field: apiKey:  myApiKey
-```
-
-### Topology
-```
-mms topology -g myGroupId
-
-or
-
-mms topology -groupId myGroupId
-
-or (with prompt)
-
-mms topology
-Required Field: groupId:  myGroupId
-```
-
-![Topology Screenshot](http://i61.tinypic.com/kbuog5.png)
 
 ## Install with NPM
 
