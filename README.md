@@ -21,6 +21,7 @@ Required Field: apiKey:  myApiKey
 mms topology -g myGroupId
 or (with prompt)
 mms topology
+Required Field: groupId:  myGroupId
 ```
 
 ![Topology Screenshot](http://i61.tinypic.com/kbuog5.png)
