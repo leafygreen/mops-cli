@@ -8,5 +8,5 @@ program
   .version('0.0.0')
   .command('login [name]', 'Store MMS username and api key.')
   .command('topology [-g group]', 'Output MMS Topology for group')
-  .command('alertsBackup [-g group]', 'Backup the alerts from a group to stdout')
+  .command('alertsExport [-g group]', 'Export the alerts from a group to stdout')
   .parse(process.argv);
