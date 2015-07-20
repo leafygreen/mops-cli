@@ -1,0 +1,72 @@
+#!/usr/bin/env node
+
+'use strict';
+
+var fs = require('fs');
+var program = require('commander');
+var MMS = require('node-mms-client');
+var MopsConfig = require('../lib/util/MopsConfig');
+
+var config = new MopsConfig();
+var mms = new MMS({
+	username: config.get('user'),
+	apiKey: config.get('apiKey'),
+	host: config.get('host')
+});
+
+program
+  .option('-l, --list', 'show all groups visible to this user')
+  .option('-s, --setDefault <groupName>', 'set default group for API requests')
+  .option('-d, --delete <groupName>', 'delete group')
+  .parse(process.argv);
+
+var outputList = function() {
+    mms.groups().list().then(
+        function(resp) {
+            console.log(resp.results);
+        },
+        function() {
+            console.error('error', arguments);
+        }
+    );
+}
+
+var outputSetDefault = function(groupName) {
+	config.set('defaultGroupName', groupName);
+	config.save();
+	console.log("Saved default group as %s.", groupName);
+}
+
+var outputDelete = function(groupName) {
+	var found = false;
+
+	mms.groups().list().then(
+		function(resp) {
+			resp.results.forEach(function(element, i, a) {
+				if (element['name'] === groupName) {
+					mms.groups(element['id']).delete()
+						.then(console.log("Sent delete request to group with name %s.", groupName));
+					found = true;
+				}
+			});
+
+			if (found === false) {
+				console.log("Group with name %s not found.", groupName);
+			}
+		},
+		function() {
+			console.log("Error getting groups: %s", err);
+		}
+	);
+}
+
+if (program['list']) {
+	outputList();
+} else if (program['setDefault']) {
+	outputSetDefault(program.setDefault);
+} else if (program['delete']) {
+	outputDelete(program.delete);
+} else {
+	program.outputHelp();
+}
+
