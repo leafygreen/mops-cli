@@ -39,7 +39,7 @@ if (requiredFields.length > 0) {
 
 function topology(groupId) {
     var config = new MopsConfig();
-    showTable(groupId, config.get('host'), config.get('username'), config.get('apiKey'));
+    showTable(groupId, config.get('host'), config.get('user'), config.get('apiKey'));
 }
 
 function showTable(groupId, host, user, apiKey) {
