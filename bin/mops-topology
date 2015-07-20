@@ -1,14 +1,14 @@
-#!/usr/bin/env node
+#!/usr/bin/env node --harmony
 
 'use strict';
 
-var fs = require('fs');
-    
 var program = require('commander');
 var prompt = require('prompt');
 var Table = require('cli-table');
 var MMS = require('node-mms-client');
 var q = require('q');
+
+var MopsConfig = require('../lib/util/MopsConfig');
 
 program
   .option('-g, --groupId [groupId]', 'MMS Group ID')
@@ -38,17 +38,11 @@ if (requiredFields.length > 0) {
 }
 
 function topology(groupId) {
-    fs.readFile('/tmp/mms-credentials', 'utf8', function (err, data) {
-        if (err) {
-            console.log(err);
-        } else {
-            var tokens = data.split(',');
-            showTable(groupId, tokens[0], tokens[1], tokens[2]);
-        }
-    });
+    var config = new MopsConfig();
+    showTable(groupId, config.get('host'), config.get('username'), config.get('apiKey'));
 }
 
-function showTable(groupId, user, apiKey, host) {
+function showTable(groupId, host, user, apiKey) {
     var mms = new MMS({
         username: user,
         apiKey: apiKey,
@@ -74,12 +68,12 @@ function showTable(groupId, user, apiKey, host) {
                         ['    Member', 'ec2-184-73-95-151.compute-1.amazonaws.com:27017\na5bf0a253d6a2d0c43391f786832b9d5', '1 min ago', '0', 'Yes', '2.4.10', 'Secondary'],
                     ['  Config', 'ec2-184-73-95-152.compute-1.amazonaws.com:27017\na5bf0a253d6a2d0c43391f786832b9d5', '1 min ago', '0', 'Yes', '2.4.10', ''],
                     ['  Mongos', 'ec2-184-73-95-153.compute-1.amazonaws.com:27017\na5bf0a253d6a2d0c43391f786832b9d5', '1 min ago', '0', 'No', '2.4.10', ''],
-                
+
                 ['Replica Set', 'Robin\na5bf0a253d6a2d0c43391f786832b9d5', '', '1', 'No', '2.6.3', '3 mongods'],
                     ['  Member', 'ec2-184-72-95-149.compute-1.amazonaws.com:27017\na5bf0a253d6a2d0c43391f786832b9d5', '1 min ago', '0', 'No', '2.6.3', 'Primary'],
                     ['  Member', 'ec2-184-72-95-150.compute-1.amazonaws.com:27017\na5bf0a253d6a2d0c43391f786832b9d5', '1 min ago', '1', 'No', '2.6.3', 'Secondary'],
                     ['  Member', 'ec2-184-72-95-151.compute-1.amazonaws.com:27017\na5bf0a253d6a2d0c43391f786832b9d5', '1 min ago', '0', 'No', '2.6.3', 'Secondary'],
-                
+
                 ['Standalone', 'ip-10-60-97-75:27017\na5bf0a253d6a2d0c43391f786832b9d5', '1 min ago', '0', 'No', '2.4.11', '']
             );
 

@@ -5,6 +5,9 @@
   "bin": {
     "mops": "bin/mops"
   },
+  "scripts": {
+    "test": "mocha --harmony --reporter spec test/**/*.spec.js"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/leafygreen/mops-cli.git"
@@ -26,10 +29,15 @@
   },
   "homepage": "https://github.com/leafygreen/mops-cli",
   "dependencies": {
-    "node-mms-client": "^0.0.0",
-    "commander": "^2.8.1",
-    "prompt": "^0.2.14",
     "cli-table": "^0.3.0",
+    "commander": "^2.8.1",
+    "nconf": "^0.7.1",
+    "node-mms-client": "^0.0.0",
+    "prompt": "^0.2.14",
     "q": "^1.4.1"
+  },
+  "devDependencies": {
+    "chai": "^3.2.0",
+    "mocha": "^2.2.5"
   }
 }
