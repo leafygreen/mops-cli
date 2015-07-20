@@ -2,13 +2,13 @@
 
 'use strict';
 
-var fs = require('fs');
-
 var program = require('commander');
 var prompt = require('prompt');
 var Table = require('cli-table');
 var MMS = require('node-mms-client');
 var q = require('q');
+
+var MopsConfig = require('../lib/util/MopsConfig');
 
 program
   .option('-g, --groupId [groupId]', 'MMS Group ID')
@@ -38,17 +38,11 @@ if (requiredFields.length > 0) {
 }
 
 function topology(groupId) {
-    fs.readFile('/tmp/mms-credentials', 'utf8', function (err, data) {
-        if (err) {
-            console.log(err);
-        } else {
-            var tokens = data.split(',');
-            showTable(groupId, tokens[0], tokens[1], tokens[2]);
-        }
-    });
+    var config = new MopsConfig();
+    showTable(groupId, config.get('host'), config.get('username'), config.get('apiKey'));
 }
 
-function showTable(groupId, user, apiKey, host) {
+function showTable(groupId, host, user, apiKey) {
     var mms = new MMS({
         username: user,
         apiKey: apiKey,

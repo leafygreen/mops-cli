@@ -2,29 +2,29 @@
 
 'use strict';
 
-var fs = require('fs');
-
 var program = require('commander');
 var prompt = require('prompt');
 
+var MopsConfig = require('../lib/util/MopsConfig');
+
 program
-  .option('-u, --user [username]', 'MMS Username')
-  .option('-a, --apiKey [apiKey]', 'MMS API Key')
-  .option('-h, --host [host]', 'MMS Endpoint')
+  .option('-h, --host [host]', 'MongoDB Ops Manager Hostname and Port')
+  .option('-u, --user [username]', 'MongoDB Ops Manager Username')
+  .option('-a, --apiKey [apiKey]', 'MongoDB Ops Manager  API Key')
   .parse(process.argv);
 
 var user = program.user;
 var apiKey = program.apiKey;
 var host = program.host;
 var requiredFields = [];
+if (!host) {
+    requiredFields.push('host');
+}
 if (!user) {
     requiredFields.push('user');
 }
 if (!apiKey) {
     requiredFields.push('apiKey');
-}
-if (!host) {
-    host = '';
 }
 
 if (requiredFields.length > 0) {
@@ -34,25 +34,26 @@ if (requiredFields.length > 0) {
         if (err) {
             console.log("An error occurred");
         } else {
+            if (!host) {
+                host = result.host;
+            }
             if (!user) {
                 user = result.user;
             }
             if (!apiKey) {
                 apiKey = result.apiKey;
             }
-            login(user, apiKey, host);
+            login(host, user, apiKey);
         }
     });
 } else {
-    login(user, apiKey, host);
+    login(host, user, apiKey);
 }
 
-function login(user, apiKey, host) {
-    fs.writeFile("/tmp/mms-credentials", [user, apiKey, host].join(','), function(err) {
-        if(err) {
-            console.log(err);
-        } else {
-            console.log("Credentials saved to: "+'/tmp/mms-credentials');
-        }
-    });
+function login(host, user, apiKey) {
+    var config = new MopsConfig();
+    config.set('host', host);
+    config.set('user', user);
+    config.set('apiKey', apiKey);
+    config.save();
 }
