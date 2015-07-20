@@ -7,5 +7,6 @@ var program = require('commander');
 program
   .version('0.0.0')
   .command('login [name]', 'Store MMS username and api key.')
+  .command('metrics', 'Metrics subcommand')
   .command('topology [group]', 'Output MMS Topology for group')
   .parse(process.argv);
