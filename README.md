@@ -1,6 +1,6 @@
-# MMS CLI
+# Mops CLI
 
-A command-line interface for performing [MongoDB Management Service](https://mms.mongodb.com) tasks through their [Public API](http://mms.mongodb.com/help/core/api/).
+A command-line interface for performing [MongoDB Cloud Manager | Ops Manager](https://cloud.mongodb.com) tasks through their [Public API](http://mms.mongodb.com/help/core/api/).
 
 
 ## Documentation
@@ -9,14 +9,14 @@ TODO
 
 See
 
-`mms --help`
+`mops --help`
 
 ![Topology Screenshot](http://i58.tinypic.com/nqrzvr.png)
 
 
 ## Install with NPM
 
-`npm install node-mms-client -g`
+`npm install mops-cli -g`
 
 * https://www.npmjs.org/package/mms-cli
 
