@@ -1,0 +1,72 @@
+#!/usr/bin/env node --harmony
+
+'use strict';
+
+var program = require('commander');
+var prompt = require('prompt');
+var MMS = require('node-mms-client');
+var q = require('q');
+
+var MopsConfig = require('../lib/util/MopsConfig');
+
+program
+  .option('-g, --groupId [groupId]', 'MMS Group ID')
+  .parse(process.argv);
+
+var groupId = program.groupId;
+var requiredFields = [];
+if (!groupId) {
+    requiredFields.push('groupId');
+}
+
+if (requiredFields.length > 0) {
+    prompt.message = "Required Field";
+    prompt.start();
+    prompt.get(requiredFields, function (err, result) {
+        if (err) {
+            console.log("An error occurred");
+        } else {
+            if (!groupId) {
+                groupId = result.groupId;
+            }
+            alertsBackup(groupId);
+        }
+    });
+} else {
+    alertsBackup(groupId);
+}
+
+function alertsBackup(groupId) {
+    var config = new MopsConfig();
+    writeAlertsConfig (groupId, config.get('host'), config.get('user'), config.get('apiKey'));
+}
+
+function writeAlertsConfig(groupId, host, user, apiKey) {
+    var mms = new MMS({
+        username: user,
+        apiKey: apiKey,
+        host: host
+    });
+    var alertsConfig = mms.groups(groupId).alertconfigs().list(printResponseCallback("Group AlertConfigs List"));
+    q.all(alertsConfig).then(
+        function(alertsConfig) {
+            console.log(JSON.stringify(alertsConfig, null, 4));
+        },
+        function(error) {
+            console.log(error)
+        }
+    );
+}
+
+function printResponseCallback(name) {
+  return function(err, resp) {
+    if (err) {
+      console.log(name + ": Error");
+      console.log(err);
+    } else {
+      //console.log(name + ": Response");
+      //console.log(resp);
+    }
+  };
+}
+
