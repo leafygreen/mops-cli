@@ -1,29 +1,35 @@
 {
-  "name": "mms-cli",
+  "name": "mops-cli",
   "version": "0.0.0",
-  "description": "A command-line application to perform MMS tasks",
+  "description": "A command-line interface for performing MongoDB Cloud Manager | Ops Manager tasks through their Public API",
   "bin": {
-    "mms": "bin/mms"
+    "mops": "bin/mops"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/leafygreen/mms-cli.git"
+    "url": "https://github.com/leafygreen/mops-cli.git"
   },
   "keywords": [
-    "mms",
+    "mops",
+    "MongoDB",
+    "MongoDB Cloud Manager",
+    "MongoDB Ops Manager",
     "cli"
   ],
-  "author": "dennis.kuczynski@gmail.com",
+  "author": "MongoDB",
+  "contributors": [
+    "Kuczynski, Dennis <dennis.kuczynski@gmail.com>"
+  ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/leafygreen/mms-cli/issues"
+    "url": "https://github.com/leafygreen/mops-cli/issues"
   },
-  "homepage": "https://github.com/leafygreen/mms-cli",
+  "homepage": "https://github.com/leafygreen/mops-cli",
   "dependencies": {
-    "node-mms-client": "0.0.0",
-    "commander": "2.2.0",
-    "prompt": "0.2.13",
+    "node-mms-client": "^0.0.0",
+    "commander": "^2.8.1",
+    "prompt": "^0.2.14",
     "cli-table": "^0.3.0",
-    "q": "^1.0.1"
+    "q": "^1.4.1"
   }
 }
