@@ -25,7 +25,7 @@ describe('util/MopsConfig', function() {
 
             it('can add a new property', function() {
                 config.set('secondField', true);
-                expect(config.get('secondField')).to.be.true;
+                expect(config.get('secondField')).to.equal(true);
             });
 
             it('can update existing property', function() {

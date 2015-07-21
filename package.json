@@ -6,6 +6,7 @@
     "mops": "bin/mops"
   },
   "scripts": {
+    "lint": "eslint bin lib test",
     "test": "mocha --harmony --reporter spec test/**/*.spec.js"
   },
   "repository": {
@@ -38,6 +39,7 @@
   },
   "devDependencies": {
     "chai": "^3.2.0",
+    "eslint": "^0.24.1",
     "mocha": "^2.2.5"
   }
 }

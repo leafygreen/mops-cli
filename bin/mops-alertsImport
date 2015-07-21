@@ -1,0 +1,85 @@
+#!/usr/bin/env node --harmony
+
+'use strict';
+
+var program = require('commander');
+var prompt = require('prompt');
+var MMS = require('node-mms-client');
+var q = require('q');
+var fs = require('fs');
+
+var MopsConfig = require('../lib/util/MopsConfig');
+
+program
+  .option('-g, --groupId [groupId]', 'MMS Group ID')
+  .option('-f, --file [filename]', 'Exported alertConfigs')
+  .parse(process.argv);
+
+var groupId = program.groupId;
+var file = program.file;
+var requiredFields = [];
+if (!groupId) {
+    requiredFields.push('groupId');
+}
+if (!file) {
+    requiredFields.push('file');
+}
+
+if (requiredFields.length > 0) {
+    prompt.message = "Required Field";
+    prompt.start();
+    prompt.get(requiredFields, function (err, result) {
+        if (err) {
+            console.log("An error occurred");
+        } else {
+            if (!groupId) {
+                groupId = result.groupId;
+            }
+            if (!file) {
+                file = result.file;
+            }
+            alertsImport(groupId, file);
+        }
+    });
+} else {
+    alertsImport(groupId, file);
+}
+
+function alertsImport(groupId, file) {
+    var inputConfig = JSON.parse(fs.readFileSync(file, 'utf8'));
+    var config = new MopsConfig();
+    writeAlertsConfig(groupId, config.get('host'), config.get('user'), config.get('apiKey'), inputConfig);
+}
+
+function writeAlertsConfig(groupId, host, user, apiKey, inputConfig) {
+    var mms = new MMS({
+        username: user,
+        apiKey: apiKey,
+        host: host
+    });
+    inputConfig['results'].forEach(function(alert) {
+        alert = removeUnnecessaryFields(alert);
+        alert.groupId = groupId;
+        var insertAlert = mms.post('/groups/'+groupId+'/alertConfigs', alert, function(err, response) {
+            console.log('Error Posting alert config: ', err);
+            console.log('Response Posting alert config: ', response);
+        });
+        q.all(insertAlert).then(
+            function(insertAlert) {
+                console.log('Alert inserted');
+            },
+            function(error) {
+                console.log('Alert NOT inserted: ', error);
+            }
+        );
+    });
+}
+
+function removeUnnecessaryFields(alert) {
+    delete alert.created;
+    delete alert.updated;
+    delete alert["id"];
+    delete alert.links;
+    return alert;
+}
+
