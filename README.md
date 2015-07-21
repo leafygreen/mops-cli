@@ -24,6 +24,10 @@ Resource identifiers are cached such that they do not need to be specified every
 
 When using `edit` commands to edit JSON in your text editor.  Your preferred text editor should be specified in the `EDITOR` environment variable.
 
+* [login](#login)
+* [metrics](#metrics)
+  * [csv](#metrics-csv)
+
 ### login
 `mops-cli login -h ops-manager.example.com -u me@example.com -a 55807ce0e4b0ce4c2b652f48`
 
@@ -37,6 +41,7 @@ Set user credentials for MongoDB Cloud Manager | Ops Manager
 ```
 
 ### metrics
+
 #### metrics csv
 `mops-cli metrics csv -g 55807ce0e4b0ce4c2b652f48 -h 3927a5536e36ce4885424e382f9f0b2f`
 
