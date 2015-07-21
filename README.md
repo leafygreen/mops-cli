@@ -22,10 +22,10 @@ The core mops-cli commands are documented below.
 
 Resource identifiers are cached such that they do not need to be specified every time. For example, if `mops-cli groups list --groupId <myGroupId>` is executed.  Future commands will assume `<myGroupId>` is the active groupId and it does not need to be respecified.
 
-When using `edit` commands to edit JSON in your text editor.  Your preferred text editor should be specified in the EDITOR environment variable.
+When using `edit` commands to edit JSON in your text editor.  Your preferred text editor should be specified in the `EDITOR` environment variable.
 
 ### login
-Example: `mops-cli login -h ops-manager.example.com -u me@example.com -a 55807ce0e4b0ce4c2b652f48`
+`mops-cli login -h ops-manager.example.com -u me@example.com -a 55807ce0e4b0ce4c2b652f48`
 
 Set user credentials for MongoDB Cloud Manager | Ops Manager
 
@@ -36,6 +36,19 @@ Set user credentials for MongoDB Cloud Manager | Ops Manager
 | -a, --apiKey [apiKey] | The specified user's API key                         |                   |
 ```
 
+### metrics
+#### metrics csv
+`mops-cli metrics csv -g 55807ce0e4b0ce4c2b652f48 -h 3927a5536e36ce4885424e382f9f0b2f`
+
+Export all metrics for the specified host in CSV format
+
+| Options                 | Description                                          | Default           |
+| ------------------------|------------------------------------------------------|-------------------|
+| -g, --groupId [groupId] | Group identifier                                     | (last used)       |
+| -h, --hostId [hostId]   | Host identifier                                      | (last used)       |
+| -g, --granularity [granularity]   | Granularity                                | MINUTE            |
+| -p, --period [period]   | Period                                               | P1D24H            |
+```
 
 ## Example Workflows
 
