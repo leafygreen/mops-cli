@@ -6,7 +6,8 @@ var program = require('commander');
 
 program
   .version('0.0.0')
-  .command('login [name]', 'Store credentials for the CLI')
+  .command('login', 'Store credentials for the CLI')
+  .command('groups', 'Commands for Groups resource')
   .command('metrics', 'Commands for Metrics resource')
   .command('alertConfigs', 'Commands for AlertConfig resource')
   .command('automationConfig', 'Commands for AutomationConfig resource')
