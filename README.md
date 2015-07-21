@@ -24,6 +24,8 @@ The core mops-cli commands are documented below.
 * [groups](#groups)
   * [list](#groups-list)
   * [delete](#groups-delete)
+* [hosts](#hosts)
+  * [list](#hosts-list)
 * [metrics](#metrics)
   * [csv](#metrics-csv)
 * [alertConfigs](#alertConfigs)
@@ -59,6 +61,18 @@ Create new alert configurations
 | Options                 | Description                                          | Default           |
 | ------------------------|------------------------------------------------------|-------------------|
 | -n, --groupName [groupName] | Group name                                     |        |
+
+### hosts
+
+#### hosts list
+`mops-cli hosts list -g 55807ce0e4b0ce4c2b652f48`
+
+Display all current hosts (JSON)
+
+| Options                 | Description                                          | Default           |
+| ------------------------|------------------------------------------------------|-------------------|
+| -g, --groupId [groupId] | Group identifier                                     | (last used)       |
+
 
 ### metrics
 

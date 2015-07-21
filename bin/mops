@@ -8,6 +8,7 @@ program
   .version('0.0.0')
   .command('login', 'Store credentials for the CLI')
   .command('groups', 'Commands for Groups resource')
+  .command('hosts', 'Commands for Hosts resource')
   .command('metrics', 'Commands for Metrics resource')
   .command('alertConfigs', 'Commands for AlertConfig resource')
   .command('automationConfig', 'Commands for AutomationConfig resource')
