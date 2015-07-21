@@ -11,4 +11,5 @@ program
   .command('alertsExport [-g group]', 'Export the alerts from a group to stdout')
   .command('alertsImport [-g group] [-f file]', 'Takes an exported alerts JSON file and puts it into a group')
   .command('metrics', 'Actions related to metrics for the group')
+  .command('automationConfig', 'Actions related to automationConfig for the group')
   .parse(process.argv);
