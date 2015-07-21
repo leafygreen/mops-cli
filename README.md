@@ -76,7 +76,7 @@ Create new alert configurations
 | -g, --groupId [groupId] | Group identifier                                     | (last used)       |
 
 #### alertConfigs edit
-`mops-cli alertConfigs edit -g 55807ce0e4b0ce4c2b652f48 -i 55807ce0e4b0ce4c2b652f48
+`mops-cli alertConfigs edit -g 55807ce0e4b0ce4c2b652f48 -i 55807ce0e4b0ce4c2b652f48`
 
 Edit specified alertConfig in your text editor
 
