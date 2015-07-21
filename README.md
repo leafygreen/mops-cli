@@ -38,7 +38,6 @@ Set user credentials for MongoDB Cloud Manager | Ops Manager
 | -h, --host [host]     | Host with optional port specifiying the API endpoint | cloud.mongodb.com |
 | -u, --user [user]     | Email address or username accessing the API          |                   |
 | -a, --apiKey [apiKey] | The specified user's API key                         |                   |
-```
 
 ### metrics
 
@@ -54,6 +53,7 @@ Export all metrics for the specified host in CSV format
 | -g, --granularity [granularity]   | Granularity                                | MINUTE            |
 | -p, --period [period]   | Period                                               | P1D24H            |
 ```
+
 
 ## Example Workflows
 
