@@ -1,9 +1,11 @@
+```
            ___  ___  __
   /\/\    /___\/ _ \/ _\
  /    \  //  // /_)/\ \
 / /\/\ \/ \_// ___/ _\ \
 \/    \/\___/\/     \__/
 
+```
 
 A command-line interface for performing [MongoDB Cloud Manager | Ops Manager](https://cloud.mongodb.com) tasks through their [Public API](http://mms.mongodb.com/help/core/api/).
 
