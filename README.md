@@ -52,7 +52,7 @@ Set user credentials for MongoDB Cloud Manager | Ops Manager
 Display all current groups (JSON)
 
 #### groups delete
-`mops-cli groups delete -n myGroupname
+`mops-cli groups delete -n myGroupname`
 
 Create new alert configurations
 
