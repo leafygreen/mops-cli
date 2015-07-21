@@ -21,7 +21,7 @@ promptUtil.getRequiredOptions({
             required: true
         }
     }
-}, program).then(function(options) {
+}, program.opts()).then(function(options) {
     listGroups(options);
 }).fail(function(err) {
     console.error('Unable to retrieve required options', err);
