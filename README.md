@@ -133,7 +133,17 @@ Edit the current automationConfig in your text editor
 
 ## Example Workflows
 
-TODO
+### Copying alerts configuration from one group to another
+`mops-cli alertConfigs list -g 55807ce0e4b0ce4c2b652f48 > myAlerts.json`
+
+`mops-cli alertConfigs create -g 55807ce0e4b0ce4c2b652f84 -f myAlerts.json`
+
+*Note*: You can do a `mops-cli login` between these two commands to change username, API key, even hosts (i.e., move from Cloud Manager to Ops Manager)
+
+### Grabbing a host's output in CSV (for Excel, etc.)
+Run `mops-cli host list` to get a list of all the host IDs in your group.
+Then run `mops-cli metrics csv -g GROUPID -h HOSTID > hostMetrics.csv` to put all that host's metrics into a CSV file.
+
 
 
 ## License

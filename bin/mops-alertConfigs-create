@@ -27,7 +27,7 @@ promptUtil.getRequiredOptions({
             required: true
         }
     }
-}, program).then(function(options) {
+}, program.opts()).then(function(options) {
     createAlertConfigs(options);
 }).fail(function(err) {
     console.error('Unable to retrieve required options', err);
