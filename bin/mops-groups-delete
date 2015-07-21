@@ -5,13 +5,14 @@
 var fs = require('fs');
 var program = require('commander');
 var MMS = require('node-mms-client');
+var Views
 
 var optionDescriptions = require('../lib/optionDescriptions');
 var MopsConfig = require('../lib/util/MopsConfig');
 var promptUtil = require('../lib/util/promptUtil');
 
 program
-  .option('-n, --groupName [groupName]', optionDescriptions.GROUP_NAME)
+  .option('-n, --name [name]', optionDescriptions.GROUP_NAME)
   .parse(process.argv);
 
 promptUtil.getRequiredOptions({

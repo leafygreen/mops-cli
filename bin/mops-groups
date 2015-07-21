@@ -8,4 +8,5 @@ program
   .version('0.0.0')
   .command('list', 'list current groups')
   .command('delete', 'delete specified group')
+  .command('create', 'create a new group')
   .parse(process.argv);

@@ -7,34 +7,18 @@ var program = require('commander');
 var optionDescriptions = require('../lib/optionDescriptions');
 var MopsConfig = require('../lib/util/MopsConfig');
 var promptUtil = require('../lib/util/promptUtil');
+var Views = require('../lib/views.js');
 
 program
   .option('-h, --host [host]', optionDescriptions.HOST)
   .option('-u, --user [username]', optionDescriptions.USER)
-  .option('-a, --apiKey [apiKey]', optionDescriptions.API_KEY)
+  .option('-a, --apiKey [apiKey]', optionDescriptions.API_KEY_)
   .parse(process.argv);
 
-promptUtil.getRequiredOptions({
-    properties: {
-        host: {
-            default: 'cloud.mongodb.com',
-            message: optionDescriptions.HOST,
-            required: true
-        },
-        user: {
-            message: optionDescriptions.USER,
-            required: true
-        },
-        apiKey: {
-            message: optionDescriptions.API_KEY,
-            required: true,
-            hidden: true
-        }
-    }
-}, program).then(function(options) {
+promptUtil.getRequiredOptions(Views.Login, program.opts()).then(function(options) {
     login(options);
 }).fail(function(err) {
-    console.error('Unable to retrieve required options', err);
+    console.error('Unable to retrieve required options.', err);
 });
 
 function login(options) {
