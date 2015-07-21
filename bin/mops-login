@@ -17,7 +17,7 @@ program
   .option('-a, --apiKey [apiKey]', API_KEY_DESCRIPTION)
   .parse(process.argv);
 
-promptUtil.getRequiredFields({
+promptUtil.getRequiredOptions({
     properties: {
         host: {
             default: 'cloud.mongodb.com',
@@ -36,6 +36,8 @@ promptUtil.getRequiredFields({
     }
 }, program).then(function(options) {
     login(options);
+}).fail(function(err) {
+    console.error('Unable to retrieve required options', err);
 });
 
 function login(options) {
