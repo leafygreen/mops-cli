@@ -7,7 +7,8 @@ var program = require('commander');
 program
   .version('0.0.0')
   .command('login [name]', 'Store MMS username and api key.')
-  .command('topology [-g group]', 'Output MMS Topology for group')
+  .command('topology [-g group]', 'Output topology for the group')
   .command('alertsExport [-g group]', 'Export the alerts from a group to stdout')
   .command('alertsImport [-g group] [-f file]', 'Takes an exported alerts JSON file and puts it into a group')
+  .command('metrics', 'Actions related to metrics for the group')
   .parse(process.argv);

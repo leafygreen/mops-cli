@@ -1,0 +1,81 @@
+#!/usr/bin/env node --harmony
+
+'use strict';
+
+var program = require('commander');
+var prompt = require('prompt');
+var MMS = require('node-mms-client');
+var q = require('q');
+
+var MopsConfig = require('../lib/util/MopsConfig');
+var MetricsWriter = require('../lib/util/MetricsWriter');
+
+program
+  .option('-g, --groupId [groupId]', 'MongoDB Ops Manager Group ID')
+  .option('-h, --hostId [hostId]', 'MongoDB Ops Manager Host ID')
+  .parse(process.argv);
+
+var groupId = program.groupId;
+var hostId = program.hostId;
+var requiredFields = [];
+if (!groupId) {
+    requiredFields.push('groupId');
+}
+if (!hostId) {
+    requiredFields.push('hostId');
+}
+
+if (requiredFields.length > 0) {
+    prompt.message = "Required Field";
+    prompt.start();
+    prompt.get(requiredFields, function (err, result) {
+        if (err) {
+            console.log("An error occurred");
+        } else {
+            if (!groupId) {
+                groupId = result.groupId;
+            }
+            if (!hostId) {
+                hostId = result.hostId;
+            }
+            exportMetrics(groupId, hostId);
+        }
+    });
+} else {
+    exportMetrics(groupId, hostId);
+}
+
+function exportMetrics(groupId, hostId) {
+    var config = new MopsConfig();
+    var mms = new MMS({
+        username: config.get('user'),
+        apiKey: config.get('apiKey'),
+        host: config.get('host')
+    });
+
+    var metricsPath = '/groups/'+groupId+'/hosts/'+hostId+'/metrics';
+    var metricsWriter = new MetricsWriter();
+    mms.get(metricsPath, function(err, response) {
+        if (err) {
+            console.error('Error retrieving metrics for '+hostId, err);
+        } else {
+            var metricRequests = response.results.filter(function(result) {
+                return !/^MUNIN_IOSTAT/.test(result.metricName) &&
+                       !/^DB_/.test(result.metricName);
+            }).map(function(result) {
+                return mms.get(metricsPath+'/'+result.metricName);
+            });
+            q.all(metricRequests).then(
+                function(responses) {
+                    responses.forEach(function(response) {
+                        metricsWriter.addMetric(response);
+                    });
+                    console.log(metricsWriter.writeCSV());
+                },
+                function() {
+                    console.error('Error retriving metrics for '+hostId, arguments);
+                }
+            );
+        }
+    });
+}
