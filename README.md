@@ -21,6 +21,9 @@ You can install the mops-cli npm package directly.
 The core mops-cli commands are documented below.
 
 * [login](#login)
+* [groups](#groups)
+  * [list](#groups-list)
+  * [delete](#groups-delete)
 * [metrics](#metrics)
   * [csv](#metrics-csv)
 * [alertConfigs](#alertConfigs)
@@ -40,6 +43,22 @@ Set user credentials for MongoDB Cloud Manager | Ops Manager
 | -h, --host [host]     | Host with optional port specifiying the API endpoint | cloud.mongodb.com |
 | -u, --user [user]     | Email address or username accessing the API          |                   |
 | -a, --apiKey [apiKey] | The specified user's API key                         |                   |
+
+### groups
+
+#### groups list
+`mops-cli groups list`
+
+Display all current groups (JSON)
+
+#### groups delete
+`mops-cli groups delete -n myGroupname
+
+Create new alert configurations
+
+| Options                 | Description                                          | Default           |
+| ------------------------|------------------------------------------------------|-------------------|
+| -n, --groupName [groupName] | Group name                                     |        |
 
 ### metrics
 
