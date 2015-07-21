@@ -1,0 +1,89 @@
+#!/usr/bin/env node --harmony
+
+'use strict';
+
+var fs = require('fs');
+var childProcess = require('child_process');
+
+var program = require('commander');
+var prompt = require('prompt');
+var MMS = require('node-mms-client');
+var q = require('q');
+var tmp = require('tmp');
+
+var MopsConfig = require('../lib/util/MopsConfig');
+
+program
+  .option('-g, --groupId [groupId]', 'MongoDB Ops Manager Group ID')
+  .parse(process.argv);
+
+var groupId = program.groupId;
+var requiredFields = [];
+if (!groupId) {
+    requiredFields.push('groupId');
+}
+
+if (requiredFields.length > 0) {
+    prompt.message = "Required Field";
+    prompt.start();
+    prompt.get(requiredFields, function (err, result) {
+        if (err) {
+            console.log("An error occurred");
+        } else {
+            if (!groupId) {
+                groupId = result.groupId;
+            }
+            editAutomationConfig(groupId);
+        }
+    });
+} else {
+    editAutomationConfig(groupId);
+}
+
+function editAutomationConfig(groupId) {
+    var config = new MopsConfig();
+    var mms = new MMS({
+        username: config.get('user'),
+        apiKey: config.get('apiKey'),
+        host: config.get('host')
+    });
+
+    mms.get('/groups/'+groupId+'/automationConfig', function(err, response) {
+        if (err) {
+            console.error('Error retrieving automationConfig', err);
+        } else {
+            var tmpobj = tmp.fileSync();
+            fs.writeFileSync(tmpobj.name, JSON.stringify(response, null, 4));
+
+            // attempt to open editor
+            var editorPath = process.env.EDITOR + ' ' + tmpobj.name;
+            var editor = childProcess.exec(editorPath, function (error, stdout, stderr) {
+                if (error) {
+                    console.log(error.stack);
+                    console.log('Error code: '+error.code);
+                    console.log('Signal received: '+error.signal);
+                }
+                console.log('Child Process STDOUT: '+stdout);
+                console.log('Child Process STDERR: '+stderr);
+            });
+
+            // wait for close
+            editor.on('exit', function (code) {
+                // then republish
+                if (code === 0) {
+                    var json = fs.readFileSync(tmpobj.name);
+                    mms.put('/groups/'+groupId+'/automationConfig', JSON.parse(json)).then(
+                        function() {
+                            console.log('AutomationConfig published');
+                        },
+                        function() {
+                            console.error('Error publishing automationConfig', arguments);
+                        }
+                    );
+                } else {
+                    console.error('Editor process exited with code '+code);
+                }
+            });
+        }
+    });
+}
