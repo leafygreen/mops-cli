@@ -108,15 +108,8 @@ Edit the current automationConfig in your text editor
 *Note*: You can do a `mops-cli login` between these two commands to change username, API key, even hosts (i.e., move from Cloud Manager to Ops Manager)
 
 ### Grabbing a host's output in CSV (for Excel, etc.)
-Use the Cloud Manager (or Ops Manager) web UI to get a host's ID.
-You can find it by looking at the URL for a host's graphs page.
-It's the last part:
-
-![the end of the URL is the host ID](http://content.screencast.com/users/PeterCG/folders/Jing/media/58886d20-d0fa-4433-8305-3d407b3201fe/00000123.png)
-
-From the above example, the command is:
-
-`mops-cli metrics csv -g 533850d5541410e80d3d0036 -h 9f545155a52a38582f7786e026a3097f > hostMetrics.csv`
+Run `mops-cli host list` to get a list of all the host IDs in your group.
+Then run `mops-cli metrics csv -g GROUPID -h HOSTID > hostMetrics.csv` to put all that host's metrics into a CSV file.
 
 
 
