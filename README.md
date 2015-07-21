@@ -1,4 +1,9 @@
-# Mops CLI
+           ___  ___  __
+  /\/\    /___\/ _ \/ _\
+ /    \  //  // /_)/\ \
+/ /\/\ \/ \_// ___/ _\ \
+\/    \/\___/\/     \__/
+
 
 A command-line interface for performing [MongoDB Cloud Manager | Ops Manager](https://cloud.mongodb.com) tasks through their [Public API](http://mms.mongodb.com/help/core/api/).
 
@@ -6,7 +11,7 @@ A command-line interface for performing [MongoDB Cloud Manager | Ops Manager](ht
 
 You can install the mops-cli npm package directly.
 
-npm install -g mops-cli
+`npm install -g mops-cli`
 
 
 ## Commands
@@ -18,6 +23,8 @@ Resource identifiers are cached such that they do not need to be specified every
 When using `edit` commands to edit JSON in your text editor.  Your preferred text editor should be specified in the EDITOR environment variable.
 
 ### login
+Example: `mops-cli login -h ops-manager.example.com -u me@example.com -a 55807ce0e4b0ce4c2b652f48`
+
 Set user credentials for MongoDB Cloud Manager | Ops Manager
 
 | Options               | Description                                          | Default           |
@@ -27,11 +34,11 @@ Set user credentials for MongoDB Cloud Manager | Ops Manager
 | -a, --apiKey [apiKey] | The specified user's API key                         |                   |
 ```
 
-Example: `mops-cli login -h ops-manager.example.com -u me@example.com -a 55807ce0e4b0ce4c2b652f48
 
 ## Example Workflows
 
 TODO
+
 
 ## License
 Licensed under the [MIT license](LICENSE-MIT "MIT License").
