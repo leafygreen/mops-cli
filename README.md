@@ -20,10 +20,6 @@ You can install the mops-cli npm package directly.
 
 The core mops-cli commands are documented below.
 
-Resource identifiers are cached such that they do not need to be specified every time. For example, if `mops-cli groups list --groupId <myGroupId>` is executed.  Future commands will assume `<myGroupId>` is the active groupId and it does not need to be respecified.
-
-When using `edit` commands to edit JSON in your text editor.  Your preferred text editor should be specified in the `EDITOR` environment variable.
-
 * [login](#login)
 * [metrics](#metrics)
   * [csv](#metrics-csv)
