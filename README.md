@@ -87,7 +87,7 @@ Edit specified alertConfig in your text editor
 
 ### automationConfig
 
-#### automationConfig csv
+#### automationConfig edit
 `mops-cli automationConfig edit -g 55807ce0e4b0ce4c2b652f48`
 
 Edit the current automationConfig in your text editor
