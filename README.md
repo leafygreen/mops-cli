@@ -107,7 +107,7 @@ TODO
 Licensed under the [MIT license](LICENSE-MIT "MIT License").
 
 
-## Contributers
+## Contributors
 * Dennis Kuczynski @denniskuczynski
 * Emily Pakulski @ohEmily
 * Peter Gravelle @pcgMongo
