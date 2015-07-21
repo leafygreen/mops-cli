@@ -52,7 +52,6 @@ Export all metrics for the specified host in CSV format
 | -h, --hostId [hostId]   | Host identifier                                      | (last used)       |
 | -g, --granularity [granularity]   | Granularity                                | MINUTE            |
 | -p, --period [period]   | Period                                               | P1D24H            |
-```
 
 
 ## Example Workflows
