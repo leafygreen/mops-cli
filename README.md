@@ -27,6 +27,12 @@ When using `edit` commands to edit JSON in your text editor.  Your preferred tex
 * [login](#login)
 * [metrics](#metrics)
   * [csv](#metrics-csv)
+* [alertConfigs](#alertConfigs)
+  * [list](#alertConfigs-list)
+  * [create](#alertConfigs-create)
+  * [edit](#alertConfigs-edit)
+* [automationConfig](#automationConfig)
+  * [edit](#automationConfig-edit)
 
 ### login
 `mops-cli login -h ops-manager.example.com -u me@example.com -a 55807ce0e4b0ce4c2b652f48`
@@ -52,6 +58,47 @@ Export all metrics for the specified host in CSV format
 | -h, --hostId [hostId]   | Host identifier                                      | (last used)       |
 | -g, --granularity [granularity]   | Granularity                                | MINUTE            |
 | -p, --period [period]   | Period                                               | P1D24H            |
+
+### alertConfigs
+
+#### alertConfigs list
+`mops-cli alertConfigs list -g 55807ce0e4b0ce4c2b652f48`
+
+Display all current alert configurations (JSON)
+
+| Options                 | Description                                          | Default           |
+| ------------------------|------------------------------------------------------|-------------------|
+| -g, --groupId [groupId] | Group identifier                                     | (last used)       |
+
+#### alertConfigs create
+`mops-cli alertConfigs create -g 55807ce0e4b0ce4c2b652f48 < myAlerts.json`
+
+Create new alert configurations
+
+| Options                 | Description                                          | Default           |
+| ------------------------|------------------------------------------------------|-------------------|
+| -g, --groupId [groupId] | Group identifier                                     | (last used)       |
+
+#### alertConfigs edit
+`mops-cli alertConfigs edit -g 55807ce0e4b0ce4c2b652f48 -i 55807ce0e4b0ce4c2b652f48
+
+Edit specified alertConfig in your text editor
+
+| Options                 | Description                                          | Default           |
+| ------------------------|------------------------------------------------------|-------------------|
+| -g, --groupId [groupId] | Group identifier                                     | (last used)       |
+| -i, --id [id]           | Alert Configuration identifier                       | (last used)       |
+
+### automationConfig
+
+#### automationConfig csv
+`mops-cli automationConfig edit -g 55807ce0e4b0ce4c2b652f48`
+
+Edit the current automationConfig in your text editor
+
+| Options                 | Description                                          | Default           |
+| ------------------------|------------------------------------------------------|-------------------|
+| -g, --groupId [groupId] | Group identifier                                     | (last used)       |
 
 
 ## Example Workflows
