@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+#!/usr/bin/env node --harmony
 
 'use strict';
 
@@ -23,7 +23,7 @@ program
 var outputList = function() {
     mms.groups().list().then(
         function(resp) {
-            console.log(resp.results);
+            console.log(JSON.stringify(resp.results, null, 4));
         },
         function() {
             console.error('error', arguments);
@@ -38,33 +38,33 @@ var outputSetDefault = function(groupName) {
 }
 
 var outputDelete = function(groupName) {
-	var found = false;
-
 	mms.groups().list().then(
 		function(resp) {
-			resp.results.forEach(function(element, i, a) {
-				if (element['name'] === groupName) {
-					mms.groups(element['id']).delete()
-						.then(console.log("Sent delete request to group with name %s.", groupName));
-					found = true;
+		    var found = resp.results.find(function(element, i, a) {
+				if (element.name === groupName) {
+					mms.groups(element.id).delete()
+						.then(console.log('Sent delete request to group with name %s.', groupName));
+					return true;
 				}
+
+				return false;
 			});
 
 			if (found === false) {
-				console.log("Group with name %s not found.", groupName);
+				console.log('Group with name %s not found.', groupName);
 			}
 		},
 		function() {
-			console.log("Error getting groups: %s", err);
+			console.log('Error getting groups: %s.', err);
 		}
 	);
 }
 
-if (program['list']) {
+if (program.list) {
 	outputList();
-} else if (program['setDefault']) {
+} else if (program.setDefault) {
 	outputSetDefault(program.setDefault);
-} else if (program['delete']) {
+} else if (program.delete) {
 	outputDelete(program.delete);
 } else {
 	program.outputHelp();
