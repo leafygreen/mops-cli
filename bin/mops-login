@@ -4,32 +4,29 @@
 
 var program = require('commander');
 
+var optionDescriptions = require('../lib/optionDescriptions');
 var MopsConfig = require('../lib/util/MopsConfig');
 var promptUtil = require('../lib/util/promptUtil');
 
-var HOST_DESCRIPTION = 'Public API Endpoint (hostname:port)';
-var USER_DESCRIPTION = 'Username/Email';
-var API_KEY_DESCRIPTION = 'API Key';
-
 program
-  .option('-h, --host [host]', HOST_DESCRIPTION)
-  .option('-u, --user [username]', USER_DESCRIPTION)
-  .option('-a, --apiKey [apiKey]', API_KEY_DESCRIPTION)
+  .option('-h, --host [host]', optionDescriptions.HOST)
+  .option('-u, --user [username]', optionDescriptions.USER)
+  .option('-a, --apiKey [apiKey]', optionDescriptions.API_KEY)
   .parse(process.argv);
 
 promptUtil.getRequiredOptions({
     properties: {
         host: {
             default: 'cloud.mongodb.com',
-            message: HOST_DESCRIPTION,
+            message: optionDescriptions.HOST,
             required: true
         },
         user: {
-            message: USER_DESCRIPTION,
+            message: optionDescriptions.USER,
             required: true
         },
         apiKey: {
-            message: API_KEY_DESCRIPTION,
+            message: optionDescriptions.API_KEY,
             required: true,
             hidden: true
         }

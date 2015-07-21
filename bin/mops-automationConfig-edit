@@ -6,41 +6,33 @@ var fs = require('fs');
 var childProcess = require('child_process');
 
 var program = require('commander');
-var prompt = require('prompt');
 var MMS = require('node-mms-client');
 var q = require('q');
 var tmp = require('tmp');
 
+var optionDescriptions = require('../lib/optionDescriptions');
 var MopsConfig = require('../lib/util/MopsConfig');
+var promptUtil = require('../lib/util/promptUtil');
 
 program
-  .option('-g, --groupId [groupId]', 'MongoDB Ops Manager Group ID')
+  .option('-g, --groupId [groupId]', optionDescriptions.GROUP_ID)
   .parse(process.argv);
 
-var groupId = program.groupId;
-var requiredFields = [];
-if (!groupId) {
-    requiredFields.push('groupId');
-}
-
-if (requiredFields.length > 0) {
-    prompt.message = "Required Field";
-    prompt.start();
-    prompt.get(requiredFields, function (err, result) {
-        if (err) {
-            console.log("An error occurred");
-        } else {
-            if (!groupId) {
-                groupId = result.groupId;
-            }
-            editAutomationConfig(groupId);
+promptUtil.getRequiredOptions({
+    properties: {
+        groupId: {
+            message: optionDescriptions.GROUP_ID,
+            required: true
         }
-    });
-} else {
-    editAutomationConfig(groupId);
-}
+    }
+}, program).then(function(options) {
+    editAutomationConfig(options);
+}).fail(function(err) {
+    console.error('Unable to retrieve required options', err);
+});
 
-function editAutomationConfig(groupId) {
+function editAutomationConfig(options) {
+    var groupId = options.groupId;
     var config = new MopsConfig();
     var mms = new MMS({
         username: config.get('user'),

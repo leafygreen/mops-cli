@@ -3,49 +3,39 @@
 'use strict';
 
 var program = require('commander');
-var prompt = require('prompt');
 var MMS = require('node-mms-client');
 var q = require('q');
 
+var optionDescriptions = require('../lib/optionDescriptions');
 var MopsConfig = require('../lib/util/MopsConfig');
+var promptUtil = require('../lib/util/promptUtil');
 var MetricsWriter = require('../lib/util/MetricsWriter');
 
 program
-  .option('-g, --groupId [groupId]', 'MongoDB Ops Manager Group ID')
-  .option('-h, --hostId [hostId]', 'MongoDB Ops Manager Host ID')
+  .option('-g, --groupId [groupId]', optionDescriptions.GROUP_ID)
+  .option('-h, --hostId [hostId]', optionDescriptions.HOST_ID)
   .parse(process.argv);
 
-var groupId = program.groupId;
-var hostId = program.hostId;
-var requiredFields = [];
-if (!groupId) {
-    requiredFields.push('groupId');
-}
-if (!hostId) {
-    requiredFields.push('hostId');
-}
-
-if (requiredFields.length > 0) {
-    prompt.message = "Required Field";
-    prompt.start();
-    prompt.get(requiredFields, function (err, result) {
-        if (err) {
-            console.log("An error occurred");
-        } else {
-            if (!groupId) {
-                groupId = result.groupId;
-            }
-            if (!hostId) {
-                hostId = result.hostId;
-            }
-            exportMetrics(groupId, hostId);
+promptUtil.getRequiredOptions({
+    properties: {
+        groupId: {
+            message: optionDescriptions.GROUP_ID,
+            required: true
+        },
+        hostId: {
+            message: optionDescriptions.HOST_ID,
+            required: true
         }
-    });
-} else {
-    exportMetrics(groupId, hostId);
-}
+    }
+}, program).then(function(options) {
+    exportCSV(options);
+}).fail(function(err) {
+    console.error('Unable to retrieve required options', err);
+});
 
-function exportMetrics(groupId, hostId) {
+function exportCSV(options) {
+    var groupId = options.groupId;
+    var hostId = options.hostId;
     var config = new MopsConfig();
     var mms = new MMS({
         username: config.get('user'),
