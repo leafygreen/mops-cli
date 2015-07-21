@@ -1,0 +1,12 @@
+#!/usr/bin/env node
+
+'use strict';
+
+var program = require('commander');
+
+program
+  .version('0.0.0')
+  .command('list', 'list current configs for the group')
+  .command('create', 'create new configs from input data')
+  .command('edit', 'edit specified alert config')
+  .parse(process.argv);

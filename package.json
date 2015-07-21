@@ -30,7 +30,6 @@
   },
   "homepage": "https://github.com/leafygreen/mops-cli",
   "dependencies": {
-    "cli-table": "^0.3.0",
     "commander": "^2.8.1",
     "nconf": "^0.7.1",
     "node-mms-client": "^0.0.0",

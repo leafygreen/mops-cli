@@ -6,10 +6,8 @@ var program = require('commander');
 
 program
   .version('0.0.0')
-  .command('login [name]', 'Store MMS username and api key.')
-  .command('topology [-g group]', 'Output topology for the group')
-  .command('alertsExport [-g group]', 'Export the alerts from a group to stdout')
-  .command('alertsImport [-g group] [-f file]', 'Takes an exported alerts JSON file and puts it into a group')
-  .command('metrics', 'Actions related to metrics for the group')
-  .command('automationConfig', 'Actions related to automationConfig for the group')
+  .command('login [name]', 'Store credentials for the CLI')
+  .command('metrics', 'Commands for Metrics resource')
+  .command('alertConfigs', 'Commands for AlertConfig resource')
+  .command('automationConfig', 'Commands for AutomationConfig resource')
   .parse(process.argv);

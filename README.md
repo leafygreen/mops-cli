@@ -67,13 +67,14 @@ Display all current alert configurations (JSON)
 | -g, --groupId [groupId] | Group identifier                                     | (last used)       |
 
 #### alertConfigs create
-`mops-cli alertConfigs create -g 55807ce0e4b0ce4c2b652f48 < myAlerts.json`
+`mops-cli alertConfigs create -g 55807ce0e4b0ce4c2b652f48 -f myAlerts.json`
 
 Create new alert configurations
 
 | Options                 | Description                                          | Default           |
 | ------------------------|------------------------------------------------------|-------------------|
 | -g, --groupId [groupId] | Group identifier                                     | (last used)       |
+| -f, --file [filename]   | JSON file of alert configs                           |                   |
 
 #### alertConfigs edit
 `mops-cli alertConfigs edit -g 55807ce0e4b0ce4c2b652f48 -i 55807ce0e4b0ce4c2b652f48`
