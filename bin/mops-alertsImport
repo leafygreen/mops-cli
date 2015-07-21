@@ -58,12 +58,8 @@ function writeAlertsConfig(groupId, host, user, apiKey, inputConfig) {
         host: host
     });
     inputConfig['results'].forEach(function(alert) {
-        delete alert.created;
-        delete alert.updated;
-        delete alert["id"];
-        delete alert.links;
+        alert = removeUnnecessaryFields(alert);
         alert.groupId = groupId;
-        console.log('current alert: ',JSON.stringify(alert,null,1))
         var insertAlert = mms.post('/groups/'+groupId+'/alertConfigs', alert, function(err, response) {
             console.log('Error Posting alert config: ', err);
             console.log('Response Posting alert config: ', response);
@@ -79,4 +75,11 @@ function writeAlertsConfig(groupId, host, user, apiKey, inputConfig) {
     });
 }
 
+function removeUnnecessaryFields(alert) {
+    delete alert.created;
+    delete alert.updated;
+    delete alert["id"];
+    delete alert.links;
+    return alert;
+}
 
