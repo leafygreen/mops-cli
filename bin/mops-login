@@ -3,57 +3,45 @@
 'use strict';
 
 var program = require('commander');
-var prompt = require('prompt');
 
 var MopsConfig = require('../lib/util/MopsConfig');
+var promptUtil = require('../lib/util/promptUtil');
+
+var HOST_DESCRIPTION = 'Public API Endpoint (hostname:port)';
+var USER_DESCRIPTION = 'Username/Email';
+var API_KEY_DESCRIPTION = 'API Key';
 
 program
-  .option('-h, --host [host]', 'MongoDB Ops Manager Hostname and Port')
-  .option('-u, --user [username]', 'MongoDB Ops Manager Username')
-  .option('-a, --apiKey [apiKey]', 'MongoDB Ops Manager  API Key')
+  .option('-h, --host [host]', HOST_DESCRIPTION)
+  .option('-u, --user [username]', USER_DESCRIPTION)
+  .option('-a, --apiKey [apiKey]', API_KEY_DESCRIPTION)
   .parse(process.argv);
 
-var user = program.user;
-var apiKey = program.apiKey;
-var host = program.host;
-var requiredFields = [];
-if (!host) {
-    requiredFields.push('host');
-}
-if (!user) {
-    requiredFields.push('user');
-}
-if (!apiKey) {
-    requiredFields.push('apiKey');
-}
-
-if (requiredFields.length > 0) {
-    prompt.message = "Required Field";
-    prompt.start();
-    prompt.get(requiredFields, function (err, result) {
-        if (err) {
-            console.log("An error occurred");
-        } else {
-            if (!host) {
-                host = result.host;
-            }
-            if (!user) {
-                user = result.user;
-            }
-            if (!apiKey) {
-                apiKey = result.apiKey;
-            }
-            login(host, user, apiKey);
+promptUtil.getRequiredFields({
+    properties: {
+        host: {
+            default: 'cloud.mongodb.com',
+            message: HOST_DESCRIPTION,
+            required: true
+        },
+        user: {
+            message: USER_DESCRIPTION,
+            required: true
+        },
+        apiKey: {
+            message: API_KEY_DESCRIPTION,
+            required: true,
+            hidden: true
         }
-    });
-} else {
-    login(host, user, apiKey);
-}
+    }
+}, program).then(function(options) {
+    login(options);
+});
 
-function login(host, user, apiKey) {
+function login(options) {
     var config = new MopsConfig();
-    config.set('host', host);
-    config.set('user', user);
-    config.set('apiKey', apiKey);
+    config.set('host', options.host);
+    config.set('user', options.user);
+    config.set('apiKey', options.apiKey);
     config.save();
 }
