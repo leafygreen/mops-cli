@@ -5,21 +5,17 @@
 var fs = require('fs');
 
 var program = require('commander');
-var MMS = require('node-mms-client');
 var q = require('q');
 var tmp = require('tmp');
 
 var optionDescriptions = require('../lib/optionDescriptions');
 var MopsConfig = require('../lib/util/MopsConfig');
+var mmsUtil = require('../lib/util/mmsUtil');
 var promptUtil = require('../lib/util/promptUtil');
 var editorUtil = require('../lib/util/editorUtil');
 
 var config = new MopsConfig();
-var mms = new MMS({
-    username: config.get('user'),
-    apiKey: config.get('apiKey'),
-    host: config.get('host')
-});
+var mms = mmsUtil.getClient(config);
 
 program
   .option('-g, --groupId [groupId]', optionDescriptions.GROUP_ID)
@@ -50,7 +46,7 @@ function editAlertConfig(options) {
         function(response) {
             editorUtil.openJSONInEditor(response).then(
                 function(response) {
-                    mms.put('/groups/'+groupId+'/alertConfigs/'+alertConfigId, JSON.parse(response)).then(
+                    mms.put('/groups/'+groupId+'/alertConfigs/'+alertConfigId, response).then(
                         function() {
                             console.log('AlertConfig published');
                         },

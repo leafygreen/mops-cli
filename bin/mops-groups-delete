@@ -4,19 +4,15 @@
 
 var fs = require('fs');
 var program = require('commander');
-var MMS = require('node-mms-client');
 var Schema = require('../lib/schema.js');
 
 var optionDescriptions = require('../lib/optionDescriptions');
 var MopsConfig = require('../lib/util/MopsConfig');
+var mmsUtil = require('../lib/util/mmsUtil');
 var promptUtil = require('../lib/util/promptUtil');
 
 var config = new MopsConfig();
-var mms = new MMS({
-    username: config.get('user'),
-    apiKey: config.get('apiKey'),
-    host: config.get('host')
-});
+var mms = mmsUtil.getClient(config);
 
 program.name = null; // addresses problem with Commander library.
                     // 'name' is reserved word.

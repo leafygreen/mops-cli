@@ -6,6 +6,7 @@ var program = require('commander');
 
 var optionDescriptions = require('../lib/optionDescriptions');
 var MopsConfig = require('../lib/util/MopsConfig');
+var mmsUtil = require('../lib/util/mmsUtil');
 var promptUtil = require('../lib/util/promptUtil');
 var Schema = require('../lib/schema.js');
 
@@ -13,12 +14,19 @@ var config = new MopsConfig('credentials');
 
 program
   .option('-h, --host [host]', optionDescriptions.HOST)
+  .option('-p, --port [port]', optionDescriptions.PORT)
+  .option('-P, --protocol [protocol]', optionDescriptions.PROTOCOL)
   .option('-u, --user [username]', optionDescriptions.USER)
   .option('-a, --apiKey [apiKey]', optionDescriptions.API_KEY)
   .parse(process.argv);
 
 promptUtil.getRequiredOptions(Schema.Login, program.opts(), config).then(function(options) {
-    console.log("Login successful");
+    var mms = mmsUtil.getClient(config);
+    mms.root().info().then(function(response) {
+    	console.log('Login successful');
+    }).fail(function(err) {
+    	console.error("Login failed", err);
+    });
 }).fail(function(err) {
     console.error('Unable to retrieve required options.', err);
 });

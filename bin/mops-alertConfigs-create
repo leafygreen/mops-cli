@@ -3,20 +3,16 @@
 'use strict';
 
 var program = require('commander');
-var MMS = require('node-mms-client');
 var q = require('q');
 var fs = require('fs');
 
 var optionDescriptions = require('../lib/optionDescriptions');
 var MopsConfig = require('../lib/util/MopsConfig');
+var mmsUtil = require('../lib/util/mmsUtil');
 var promptUtil = require('../lib/util/promptUtil');
 
 var config = new MopsConfig();
-var mms = new MMS({
-    username: config.get('user'),
-    apiKey: config.get('apiKey'),
-    host: config.get('host')
-});
+var mms = mmsUtil.getClient(config);
 
 program
   .option('-g, --groupId [groupId]', optionDescriptions.GROUP_ID)

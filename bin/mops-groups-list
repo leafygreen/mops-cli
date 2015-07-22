@@ -4,17 +4,13 @@
 
 var fs = require('fs');
 var program = require('commander');
-var MMS = require('node-mms-client');
 
 var optionDescriptions = require('../lib/optionDescriptions');
 var MopsConfig = require('../lib/util/MopsConfig');
+var mmsUtil = require('../lib/util/mmsUtil');
 
 var config = new MopsConfig();
-var mms = new MMS({
-    username: config.get('user'),
-    apiKey: config.get('apiKey'),
-    host: config.get('host')
-});
+var mms = mmsUtil.getClient(config);
 
 mms.groups().list().then(
     function(resp) {

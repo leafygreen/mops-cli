@@ -3,24 +3,22 @@
 'use strict';
 
 var program = require('commander');
-var MMS = require('node-mms-client');
 var q = require('q');
 
 var optionDescriptions = require('../lib/optionDescriptions');
 var MopsConfig = require('../lib/util/MopsConfig');
+var mmsUtil = require('../lib/util/mmsUtil');
 var promptUtil = require('../lib/util/promptUtil');
 var MetricsWriter = require('../lib/util/MetricsWriter');
 
 var config = new MopsConfig();
-var mms = new MMS({
-    username: config.get('user'),
-    apiKey: config.get('apiKey'),
-    host: config.get('host')
-});
+var mms = mmsUtil.getClient(config);
 
 program
   .option('-g, --groupId [groupId]', optionDescriptions.GROUP_ID)
   .option('-h, --hostId [hostId]', optionDescriptions.HOST_ID)
+  .option('-G, --granularity [granularity]', optionDescriptions.GRANULARITY)
+  .option('-P, --period [period]', optionDescriptions.PERIOD)
   .parse(process.argv);
 
 promptUtil.getRequiredOptions({
@@ -32,6 +30,16 @@ promptUtil.getRequiredOptions({
         hostId: {
             message: optionDescriptions.HOST_ID,
             required: true
+        },
+        granularity: {
+            message: optionDescriptions.GRANULARITY,
+            default: 'MINUTE',
+            required: false
+        },
+        period: {
+            message: optionDescriptions.PERIOD,
+            default: 'P1DT24H',
+            required: false
         }
     }
 }, program.opts(), config).then(function(options) {
@@ -43,7 +51,10 @@ promptUtil.getRequiredOptions({
 function exportCSV(options) {
     var groupId = options.groupId;
     var hostId = options.hostId;
-    var metricsPath = '/groups/'+groupId+'/hosts/'+hostId+'/metrics';
+    var granularity = options.granularity;
+    var period = options.period;
+    var metricsPath = '/groups/' + groupId + '/hosts/' + hostId + '/metrics';
+    var metricsParams = '?granularity=' + granularity + '&period=' + period;
     var metricsWriter = new MetricsWriter();
     mms.get(metricsPath, function(err, response) {
         if (err) {
@@ -53,7 +64,7 @@ function exportCSV(options) {
                 return !/^MUNIN_IOSTAT/.test(result.metricName) &&
                        !/^DB_/.test(result.metricName);
             }).map(function(result) {
-                return mms.get(metricsPath+'/'+result.metricName);
+                return mms.get(metricsPath+'/'+result.metricName+metricsParams);
             });
             q.all(metricRequests).then(
                 function(responses) {
