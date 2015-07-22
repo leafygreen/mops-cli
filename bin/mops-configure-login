@@ -21,11 +21,22 @@ program
   .parse(process.argv);
 
 promptUtil.getRequiredOptions(Schema.Login, program.opts(), config).then(function(options) {
-    var mms = mmsUtil.getClient(config);
-    mms.root().info().then(function(response) {
-    	console.log('Login successful');
-    }).fail(function(err) {
-    	console.error("Login failed", err);
+    config.set('host', options.host);
+    config.set('port', options.port);
+    config.set('protocol', options.protocol);
+    config.set('user', options.user);
+    config.set('apiKey', options.apiKey);
+    config.save(function(err) {
+        if (err) {
+            console.log('Failed to update configuration file.');
+        } else {
+            var mms = mmsUtil.getClient(config);
+            mms.root().info().then(function(response) {
+    	        console.log('Login successful');
+            }).fail(function(err) {
+    	        console.error("Login failed", err);
+            });
+        }
     });
 }).fail(function(err) {
     console.error('Unable to retrieve required options.', err);
