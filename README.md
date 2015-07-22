@@ -32,7 +32,7 @@ The core mops-cli commands are documented below.
   * [edit](#automationConfig-edit)
 
 ### login
-`mops-cli login -h ops-manager.example.com -u me@example.com -a 55807ce0e4b0ce4c2b652f48`
+`mops-cli login -h HOSTNAME -p PORT -u USERNAME -a APIKEY`
 
 Set user credentials for MongoDB Cloud Manager | Ops Manager
 
