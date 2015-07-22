@@ -1,0 +1,36 @@
+#!/usr/bin/env node --harmony
+
+'use strict';
+
+var program = require('commander');
+
+var optionDescriptions = require('../lib/optionDescriptions');
+var MopsConfig = require('../lib/util/MopsConfig');
+var promptUtil = require('../lib/util/promptUtil');
+var Schema = require('../lib/schema.js');
+
+var config = new MopsConfig('defaults');
+
+program
+  .option('-g, --groupId [groupId]', optionDescriptions.GROUP_ID)
+  .parse(process.argv);
+
+console.log("HEAY")
+promptUtil.getRequiredOptions({
+	properties: {
+		groupId: {
+			message: optionDescriptions.GROUP_ID,
+			required: true
+		}
+	}
+}, program.opts(), config).then(function(options) {
+	console.log("HI")
+	config.set('groupId', options.groupId);
+	config.save(function(err) {
+		if (err) {
+			console.log("Failed to update configuration file.");
+		} else {
+			console.log("Saved default groupId as %s.", program.opts().groupId);
+		}
+	});
+});

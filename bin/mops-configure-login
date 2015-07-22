@@ -9,7 +9,7 @@ var MopsConfig = require('../lib/util/MopsConfig');
 var promptUtil = require('../lib/util/promptUtil');
 var Schema = require('../lib/schema.js');
 
-var config = new MopsConfig();
+var config = new MopsConfig('credentials');
 
 program
   .option('-h, --host [host]', optionDescriptions.HOST)

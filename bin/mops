@@ -3,10 +3,11 @@
 'use strict';
 
 var program = require('commander');
+var MopsConfig = require('../lib/util/MopsConfig');
 
 program
   .version('0.0.0')
-  .command('login', 'Store credentials for the CLI')
+  .command('configure', 'Commands to set options in config file')
   .command('groups', 'Commands for Groups resource')
   .command('hosts', 'Commands for Hosts resource')
   .command('metrics', 'Commands for Metrics resource')
