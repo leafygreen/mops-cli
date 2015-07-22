@@ -15,7 +15,6 @@ program
   .option('-g, --groupId [groupId]', optionDescriptions.GROUP_ID)
   .parse(process.argv);
 
-console.log("HEAY")
 promptUtil.getRequiredOptions({
 	properties: {
 		groupId: {
@@ -24,13 +23,12 @@ promptUtil.getRequiredOptions({
 		}
 	}
 }, program.opts(), config).then(function(options) {
-	console.log("HI")
 	config.set('groupId', options.groupId);
 	config.save(function(err) {
 		if (err) {
 			console.log("Failed to update configuration file.");
 		} else {
-			console.log("Saved default groupId as %s.", program.opts().groupId);
+			console.log("Saved default groupId as " + options.groupId);
 		}
 	});
 });
