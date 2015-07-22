@@ -151,7 +151,7 @@ Licensed under the [MIT license](LICENSE-MIT "MIT License").
 * Dennis Kuczynski @denniskuczynski
 * Emily Pakulski @ohEmily
 * Peter Gravelle @pcgMongo
-
+* Daiji Shikama @deerspace
 
 ## Shout Outs
 
