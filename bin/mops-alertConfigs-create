@@ -11,6 +11,13 @@ var optionDescriptions = require('../lib/optionDescriptions');
 var MopsConfig = require('../lib/util/MopsConfig');
 var promptUtil = require('../lib/util/promptUtil');
 
+var config = new MopsConfig();
+var mms = new MMS({
+    username: config.get('user'),
+    apiKey: config.get('apiKey'),
+    host: config.get('host')
+});
+
 program
   .option('-g, --groupId [groupId]', optionDescriptions.GROUP_ID)
   .option('-f, --file [filename]', optionDescriptions.FILE)
@@ -27,7 +34,7 @@ promptUtil.getRequiredOptions({
             required: true
         }
     }
-}, program.opts()).then(function(options) {
+}, program.opts(), config).then(function(options) {
     createAlertConfigs(options);
 }).fail(function(err) {
     console.error('Unable to retrieve required options', err);
@@ -35,16 +42,10 @@ promptUtil.getRequiredOptions({
 
 function createAlertConfigs(options) {
     var inputConfig = JSON.parse(fs.readFileSync(options.file, 'utf8'));
-    var config = new MopsConfig();
-    writeAlertsConfig(options.groupId, config.get('host'), config.get('user'), config.get('apiKey'), inputConfig);
+    writeAlertsConfig(options.groupId, inputConfig);
 }
 
-function writeAlertsConfig(groupId, host, user, apiKey, inputConfig) {
-    var mms = new MMS({
-        username: user,
-        apiKey: apiKey,
-        host: host
-    });
+function writeAlertsConfig(groupId, inputConfig) {
     inputConfig['results'].forEach(function(alert) {
         alert = removeUnnecessaryFields(alert);
         alert.groupId = groupId;

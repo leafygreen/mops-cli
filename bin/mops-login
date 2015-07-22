@@ -9,22 +9,16 @@ var MopsConfig = require('../lib/util/MopsConfig');
 var promptUtil = require('../lib/util/promptUtil');
 var Views = require('../lib/views.js');
 
+var config = new MopsConfig();
+
 program
   .option('-h, --host [host]', optionDescriptions.HOST)
   .option('-u, --user [username]', optionDescriptions.USER)
-  .option('-a, --apiKey [apiKey]', optionDescriptions.API_KEY_)
+  .option('-a, --apiKey [apiKey]', optionDescriptions.API_KEY)
   .parse(process.argv);
 
-promptUtil.getRequiredOptions(Views.Login, program.opts()).then(function(options) {
-    login(options);
+promptUtil.getRequiredOptions(Views.Login, program.opts(), config).then(function(options) {
+    console.log("Login successful");
 }).fail(function(err) {
     console.error('Unable to retrieve required options.', err);
 });
-
-function login(options) {
-    var config = new MopsConfig();
-    config.set('host', options.host);
-    config.set('user', options.user);
-    config.set('apiKey', options.apiKey);
-    config.save();
-}

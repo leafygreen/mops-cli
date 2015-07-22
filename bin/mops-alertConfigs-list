@@ -10,6 +10,13 @@ var optionDescriptions = require('../lib/optionDescriptions');
 var MopsConfig = require('../lib/util/MopsConfig');
 var promptUtil = require('../lib/util/promptUtil');
 
+var config = new MopsConfig();
+var mms = new MMS({
+    username: config.get('user'),
+    apiKey: config.get('apiKey'),
+    host: config.get('host')
+});
+
 program
   .option('-g, --groupId [groupId]', optionDescriptions.GROUP_ID)
   .parse(process.argv);
@@ -21,23 +28,17 @@ promptUtil.getRequiredOptions({
             required: true
         }
     }
-}, program.opts()).then(function(options) {
+}, program.opts(), config).then(function(options) {
     listAlertConfigs(options);
 }).fail(function(err) {
     console.error('Unable to retrieve required options', err);
 });
 
 function listAlertConfigs(options) {
-    var config = new MopsConfig();
-    writeAlertsConfig(options.groupId, config.get('host'), config.get('user'), config.get('apiKey'));
+    writeAlertsConfig(options.groupId);
 }
 
-function writeAlertsConfig(groupId, host, user, apiKey) {
-    var mms = new MMS({
-        username: user,
-        apiKey: apiKey,
-        host: host
-    });
+function writeAlertsConfig(groupId) {
     var alertsConfig = mms.groups(groupId).alertconfigs().list();
     q.all(alertsConfig).then(
         function(alertsConfig) {

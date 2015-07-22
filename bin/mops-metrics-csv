@@ -11,6 +11,13 @@ var MopsConfig = require('../lib/util/MopsConfig');
 var promptUtil = require('../lib/util/promptUtil');
 var MetricsWriter = require('../lib/util/MetricsWriter');
 
+var config = new MopsConfig();
+var mms = new MMS({
+    username: config.get('user'),
+    apiKey: config.get('apiKey'),
+    host: config.get('host')
+});
+
 program
   .option('-g, --groupId [groupId]', optionDescriptions.GROUP_ID)
   .option('-h, --hostId [hostId]', optionDescriptions.HOST_ID)
@@ -27,7 +34,7 @@ promptUtil.getRequiredOptions({
             required: true
         }
     }
-}, program.opts()).then(function(options) {
+}, program.opts(), config).then(function(options) {
     exportCSV(options);
 }).fail(function(err) {
     console.error('Unable to retrieve required options', err);
@@ -36,13 +43,6 @@ promptUtil.getRequiredOptions({
 function exportCSV(options) {
     var groupId = options.groupId;
     var hostId = options.hostId;
-    var config = new MopsConfig();
-    var mms = new MMS({
-        username: config.get('user'),
-        apiKey: config.get('apiKey'),
-        host: config.get('host')
-    });
-
     var metricsPath = '/groups/'+groupId+'/hosts/'+hostId+'/metrics';
     var metricsWriter = new MetricsWriter();
     mms.get(metricsPath, function(err, response) {

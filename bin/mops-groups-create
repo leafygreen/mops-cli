@@ -17,13 +17,13 @@ var mms = new MMS({
 	host: config.get('host')
 });
 
-program.name = null; // addresses problem with Commander library. 
+program.name = null; // addresses problem with Commander library.
 					// 'name' is reserved word.
 program
   .option('-n, --name [name]', 'show all groups visible to this user')
   .parse(process.argv);
 
-promptUtil.getRequiredOptions(Views.Group, program.opts())
+promptUtil.getRequiredOptions(Views.Group, program.opts(), config)
 .then(function(options) {
 	mms.groups().create(options);
 }).fail(function(err) {

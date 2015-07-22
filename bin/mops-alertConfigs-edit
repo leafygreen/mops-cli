@@ -7,6 +7,7 @@ var fs = require('fs');
 var program = require('commander');
 var MMS = require('node-mms-client');
 var q = require('q');
+var tmp = require('tmp');
 
 var optionDescriptions = require('../lib/optionDescriptions');
 var MopsConfig = require('../lib/util/MopsConfig');
@@ -22,6 +23,7 @@ var mms = new MMS({
 
 program
   .option('-g, --groupId [groupId]', optionDescriptions.GROUP_ID)
+  .option('-i, --alertConfigId [alertConfigId]', optionDescriptions.ALERT_CONFIG_ID)
   .parse(process.argv);
 
 promptUtil.getRequiredOptions({
@@ -29,26 +31,31 @@ promptUtil.getRequiredOptions({
         groupId: {
             message: optionDescriptions.GROUP_ID,
             required: true
+        },
+        alertConfigId: {
+            message: optionDescriptions.ALERT_CONFIG_ID,
+            required: true
         }
     }
 }, program.opts(), config).then(function(options) {
-    editAutomationConfig(options);
+    editAlertConfig(options);
 }).fail(function(err) {
     console.error('Unable to retrieve required options', err);
 });
 
-function editAutomationConfig(options) {
+function editAlertConfig(options) {
     var groupId = options.groupId;
-    mms.get('/groups/'+groupId+'/automationConfig').then(
+    var alertConfigId = options.alertConfigId;
+    mms.get('/groups/'+groupId+'/alertConfigs/'+alertConfigId).then(
         function(response) {
             editorUtil.openJSONInEditor(response).then(
                 function(response) {
-                    mms.put('/groups/'+groupId+'/automationConfig', JSON.parse(response)).then(
+                    mms.put('/groups/'+groupId+'/alertConfigs/'+alertConfigId, JSON.parse(response)).then(
                         function() {
-                            console.log('AutomationConfig published');
+                            console.log('AlertConfig published');
                         },
-                        function() {
-                            console.error('Error publishing AutomationConfig', arguments);
+                        function(err) {
+                            console.error('Error publishing AlertConfig', err);
                         }
                     );
                 },
@@ -58,7 +65,7 @@ function editAutomationConfig(options) {
             );
         },
         function(err) {
-            console.error('Error retrieving AutomationConfig', err);
+            console.error('Error retrieving AlertConfig', err);
         }
     );
 }

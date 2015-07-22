@@ -60,7 +60,7 @@ Create new alert configurations
 
 | Options                 | Description                                          | Default           |
 | ------------------------|------------------------------------------------------|-------------------|
-| -n, --groupName [groupName] | Group name                                     |        |
+| -n, --name [name] | Group name                                     |        |
 
 ### hosts
 
@@ -117,7 +117,7 @@ Edit specified alertConfig in your text editor
 | Options                 | Description                                          | Default           |
 | ------------------------|------------------------------------------------------|-------------------|
 | -g, --groupId [groupId] | Group identifier                                     | (last used)       |
-| -i, --id [id]           | Alert Configuration identifier                       | (last used)       |
+| -i, --alertConfigId [alertConfigId]| Alert Configuration identifier            | (last used)       |
 
 ### automationConfig
 
