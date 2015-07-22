@@ -45,10 +45,7 @@ function writeAlertsConfig(groupId, inputConfig) {
     inputConfig.forEach(function(alert) {
         alert = removeUnnecessaryFields(alert);
         alert.groupId = groupId;
-        var insertAlert = mms.post('/groups/'+groupId+'/alertConfigs', alert, function(err, response) {
-            console.log('Error Posting alert config: ', err);
-            console.log('Response Posting alert config: ', response);
-        });
+        var insertAlert = mms.post('/groups/'+groupId+'/alertConfigs', alert);
         q.all(insertAlert).then(
             function(insertAlert) {
                 console.log('Alert inserted');
