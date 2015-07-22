@@ -15,6 +15,7 @@ var config = new MopsConfig();
 program
   .option('-h, --host [host]', optionDescriptions.HOST)
   .option('-p, --port [port]', optionDescriptions.PORT)
+  .option('-P, --protocol [protocol]', optionDescriptions.PROTOCOL)
   .option('-u, --user [username]', optionDescriptions.USER)
   .option('-a, --apiKey [apiKey]', optionDescriptions.API_KEY)
   .parse(process.argv);

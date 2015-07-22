@@ -32,7 +32,7 @@
   "dependencies": {
     "commander": "^2.8.1",
     "nconf": "^0.7.1",
-    "node-mms-client": "^0.0.1",
+    "node-mms-client": "^0.0.2",
     "prompt": "^0.2.14",
     "q": "^1.4.1",
     "tmp": "0.0.26"
