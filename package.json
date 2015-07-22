@@ -22,7 +22,9 @@
   ],
   "author": "MongoDB",
   "contributors": [
-    "Kuczynski, Dennis <dennis.kuczynski@gmail.com>"
+    "Kuczynski, Dennis <dennis.kuczynski@gmail.com>",
+    "Pakulski, Emily <emily.pakulski@gmail.com>",
+    "Peter Gravelle <peter@mongodb.com>"
   ],
   "license": "MIT",
   "bugs": {
