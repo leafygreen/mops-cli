@@ -41,7 +41,7 @@ function writeAlertsConfig(groupId) {
             console.log(JSON.stringify(alertsConfig, null, 4));
         },
         function(error) {
-            console.log("Failed to get the alert config: ", error)
+            console.log("Failed to get the alert config: ", error);
         }
     );
 }
