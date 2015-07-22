@@ -1,6 +1,6 @@
 {
   "name": "mops-cli",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "A command-line interface for performing MongoDB Cloud Manager | Ops Manager tasks through their Public API",
   "bin": {
     "mops": "bin/mops"
