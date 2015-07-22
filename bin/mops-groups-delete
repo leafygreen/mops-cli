@@ -5,52 +5,48 @@
 var fs = require('fs');
 var program = require('commander');
 var MMS = require('node-mms-client');
+var Views = require('../lib/views.js');
 
 var optionDescriptions = require('../lib/optionDescriptions');
 var MopsConfig = require('../lib/util/MopsConfig');
 var promptUtil = require('../lib/util/promptUtil');
 
-program
-  .option('-n, --groupName [groupName]', optionDescriptions.GROUP_NAME)
-  .parse(process.argv);
-
-promptUtil.getRequiredOptions({
-    properties: {
-        groupName: {
-            message: optionDescriptions.GROUP_NAME,
-            required: true
-        }
-    }
-}, program.opts()).then(function(options) {
-    deleteGroup(options);
-}).fail(function(err) {
-    console.error('Unable to retrieve required options', err);
+var config = new MopsConfig();
+var mms = new MMS({
+    username: config.get('user'),
+    apiKey: config.get('apiKey'),
+    host: config.get('host')
 });
 
+program.name = null; // addresses problem with Commander library. 
+                    // 'name' is reserved word.
+program
+  .option('-n, --name [name]', 'show all groups visible to this user')
+  .parse(process.argv);
+
+promptUtil.getRequiredOptions(Views.Group, program.opts()).then(
+    function(options) {
+        deleteGroup(options);
+    }    
+);
+
 function deleteGroup(options) {
-    var groupName = options.groupName;
-    var config = new MopsConfig();
-    var mms = new MMS({
-        username: config.get('user'),
-        apiKey: config.get('apiKey'),
-        host: config.get('host')
-    });
     mms.groups().list().then(
         function(resp) {
             var found = resp.results.find(function(element) {
-                return element.name === groupName;
+                return element.name === options.name;
             });
 
-            if (found) {
+            if (found !== undefined) {
                 mms.groups(found.id).delete().then(function() {
-                    console.log('Sent delete request to group with name ' + groupName);
+                    console.log('Sent delete request to group with name ' + options.name);
                 });
             } else {
-                console.error('Group with name ' + groupName + ' not found');
+                console.error('Group with name ' + options.name + ' not found');
             }
         },
         function(err) {
             console.error('Error getting groups', err);
         }
-    );
+    )
 }

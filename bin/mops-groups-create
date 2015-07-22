@@ -1,0 +1,31 @@
+#!/usr/bin/env node --harmony
+
+'use strict';
+
+var fs = require('fs');
+var MopsConfig = require('../lib/util/MopsConfig');
+var promptUtil = require('../lib/util/promptUtil');
+var optionDescriptions = require('../lib/optionDescriptions');
+var program = require('commander');
+var MMS = require('node-mms-client');
+var Views = require('../lib/views.js');
+
+var config = new MopsConfig();
+var mms = new MMS({
+	username: config.get('user'),
+	apiKey: config.get('apiKey'),
+	host: config.get('host')
+});
+
+program.name = null; // addresses problem with Commander library. 
+					// 'name' is reserved word.
+program
+  .option('-n, --name [name]', 'show all groups visible to this user')
+  .parse(process.argv);
+
+promptUtil.getRequiredOptions(Views.Group, program.opts())
+.then(function(options) {
+	mms.groups().create(options);
+}).fail(function(err) {
+	console.error('Unable to retrieve required options.', err);
+});

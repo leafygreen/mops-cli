@@ -8,38 +8,20 @@ var MMS = require('node-mms-client');
 
 var optionDescriptions = require('../lib/optionDescriptions');
 var MopsConfig = require('../lib/util/MopsConfig');
-var promptUtil = require('../lib/util/promptUtil');
 
-program
-  .option('-g, --groupId [groupId]', optionDescriptions.GROUP_ID)
-  .parse(process.argv);
-
-promptUtil.getRequiredOptions({
-    properties: {
-        groupId: {
-            message: optionDescriptions.GROUP_ID,
-            required: true
-        }
-    }
-}, program.opts()).then(function(options) {
-    listGroups(options);
-}).fail(function(err) {
-    console.error('Unable to retrieve required options', err);
+var config = new MopsConfig();
+var mms = new MMS({
+    username: config.get('user'),
+    apiKey: config.get('apiKey'),
+    host: config.get('host')
 });
+   
+mms.groups().list().then(
+    function(resp) {
+        console.log(JSON.stringify(resp.results, null, 4));
+    },
+    function() {
+        console.error('error', arguments);
+    }
+);
 
-function listGroups(options) {
-    var config = new MopsConfig();
-    var mms = new MMS({
-        username: config.get('user'),
-        apiKey: config.get('apiKey'),
-        host: config.get('host')
-    });
-    mms.groups().list().then(
-        function(resp) {
-            console.log(JSON.stringify(resp.results, null, 4));
-        },
-        function() {
-            console.error('error', arguments);
-        }
-    );
-}
