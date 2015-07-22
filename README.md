@@ -69,7 +69,7 @@ Display all current hosts (JSON)
 
 | Options                 | Description                                          | Default           |
 | ------------------------|------------------------------------------------------|-------------------|
-| -g, --groupId [groupId] | Group identifier                                     | (last used)       |
+| -g, --groupId [groupId] | Group identifier                                     |                   |
 
 
 ### metrics
@@ -81,10 +81,10 @@ Export all metrics for the specified host in CSV format
 
 | Options                 | Description                                          | Default           |
 | ------------------------|------------------------------------------------------|-------------------|
-| -g, --groupId [groupId] | Group identifier                                     | (last used)       |
-| -h, --hostId [hostId]   | Host identifier                                      | (last used)       |
+| -g, --groupId [groupId] | Group identifier                                     |                   |
+| -h, --hostId [hostId]   | Host identifier                                      |                   |
 | -G, --granularity [granularity]   | Granularity                                | MINUTE            |
-| -P, --period [period]   | Period                                               | P1DT24H            |
+| -P, --period [period]   | Period                                               | P1DT24H           |
 
 ### alertConfigs
 
@@ -95,7 +95,7 @@ Display all current alert configurations (JSON)
 
 | Options                 | Description                                          | Default           |
 | ------------------------|------------------------------------------------------|-------------------|
-| -g, --groupId [groupId] | Group identifier                                     | (last used)       |
+| -g, --groupId [groupId] | Group identifier                                     |                   |
 
 #### alertConfigs create
 `mops-cli alertConfigs create -g GROUPID -f myAlerts.json`
@@ -104,7 +104,7 @@ Create new alert configurations
 
 | Options                 | Description                                          | Default           |
 | ------------------------|------------------------------------------------------|-------------------|
-| -g, --groupId [groupId] | Group identifier                                     | (last used)       |
+| -g, --groupId [groupId] | Group identifier                                     |                   |
 | -f, --file [filename]   | JSON file of alert configs                           |                   |
 
 #### alertConfigs edit
@@ -114,8 +114,8 @@ Edit specified alertConfig in your text editor
 
 | Options                 | Description                                          | Default           |
 | ------------------------|------------------------------------------------------|-------------------|
-| -g, --groupId [groupId] | Group identifier                                     | (last used)       |
-| -i, --alertConfigId [alertConfigId]| Alert Configuration identifier            | (last used)       |
+| -g, --groupId [groupId] | Group identifier                                     |                   |
+| -i, --alertConfigId [alertConfigId]| Alert Configuration identifier            |                   |
 
 ### automationConfig
 
@@ -126,7 +126,7 @@ Edit the current automationConfig in your text editor
 
 | Options                 | Description                                          | Default           |
 | ------------------------|------------------------------------------------------|-------------------|
-| -g, --groupId [groupId] | Group identifier                                     | (last used)       |
+| -g, --groupId [groupId] | Group identifier                                     |                   |
 
 
 ## Example Workflows
