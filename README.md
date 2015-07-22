@@ -5,6 +5,15 @@
 
 A command-line interface for performing [MongoDB Cloud Manager | Ops Manager](https://cloud.mongodb.com) tasks through their [Public API](https://docs.cloud.mongodb.com/api/).
 
+## Benefits
+
+* MOPS is a command line tool for both Cloud Manager and Ops Manager.
+* You can do from the terminal things that you can do from the UI
+* You can easily add new commands to automate things you'd like
+* Easily move data back and forth between Cloud Manager an Ops Manager
+* Run custom analytics on permformance metrics data in Excel, R, etc.
+* Leverages [node-mms-client JS API wrapper](https://github.com/leafygreen/node-mms-client)
+
 ## Installation
 
 You can install the mops-cli npm package directly.
