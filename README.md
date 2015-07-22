@@ -38,7 +38,9 @@ Set user credentials for MongoDB Cloud Manager | Ops Manager
 
 | Options               | Description                                          | Default           |
 | ----------------------|------------------------------------------------------|-------------------|
-| -h, --host [host]     | Host with optional port specifiying the API endpoint | cloud.mongodb.com |
+| -h, --host [host]     | The API endpoint hostname | cloud.mongodb.com |
+| -p, --port [port]     | The API endpoint port | 443 |
+| -P, --protocol [protocol]     | The API endpoint protocol | https |
 | -u, --user [user]     | Email address or username accessing the API          |                   |
 | -a, --apiKey [apiKey] | The specified user's API key                         |                   |
 
@@ -50,7 +52,7 @@ Set user credentials for MongoDB Cloud Manager | Ops Manager
 Display all current groups (JSON)
 
 #### groups delete
-`mops-cli groups delete -n myGroupname`
+`mops-cli groups delete -n GROUPNAME`
 
 Create new alert configurations
 
@@ -61,7 +63,7 @@ Create new alert configurations
 ### hosts
 
 #### hosts list
-`mops-cli hosts list -g 55807ce0e4b0ce4c2b652f48`
+`mops-cli hosts list -g GROUPID`
 
 Display all current hosts (JSON)
 
@@ -73,7 +75,7 @@ Display all current hosts (JSON)
 ### metrics
 
 #### metrics csv
-`mops-cli metrics csv -g 55807ce0e4b0ce4c2b652f48 -h 3927a5536e36ce4885424e382f9f0b2f`
+`mops-cli metrics csv -g GROUPID -h HOSTID`
 
 Export all metrics for the specified host in CSV format
 
@@ -81,13 +83,13 @@ Export all metrics for the specified host in CSV format
 | ------------------------|------------------------------------------------------|-------------------|
 | -g, --groupId [groupId] | Group identifier                                     | (last used)       |
 | -h, --hostId [hostId]   | Host identifier                                      | (last used)       |
-| -g, --granularity [granularity]   | Granularity                                | MINUTE            |
-| -p, --period [period]   | Period                                               | P1D24H            |
+| -G, --granularity [granularity]   | Granularity                                | MINUTE            |
+| -P, --period [period]   | Period                                               | P1DT24H            |
 
 ### alertConfigs
 
 #### alertConfigs list
-`mops-cli alertConfigs list -g 55807ce0e4b0ce4c2b652f48`
+`mops-cli alertConfigs list -g GROUPID`
 
 Display all current alert configurations (JSON)
 
@@ -96,7 +98,7 @@ Display all current alert configurations (JSON)
 | -g, --groupId [groupId] | Group identifier                                     | (last used)       |
 
 #### alertConfigs create
-`mops-cli alertConfigs create -g 55807ce0e4b0ce4c2b652f48 -f myAlerts.json`
+`mops-cli alertConfigs create -g GROUPID -f myAlerts.json`
 
 Create new alert configurations
 
@@ -106,7 +108,7 @@ Create new alert configurations
 | -f, --file [filename]   | JSON file of alert configs                           |                   |
 
 #### alertConfigs edit
-`mops-cli alertConfigs edit -g 55807ce0e4b0ce4c2b652f48 -i 55807ce0e4b0ce4c2b652f48`
+`mops-cli alertConfigs edit -g GROUPID -i ALERTCONFIGID`
 
 Edit specified alertConfig in your text editor
 
@@ -118,7 +120,7 @@ Edit specified alertConfig in your text editor
 ### automationConfig
 
 #### automationConfig edit
-`mops-cli automationConfig edit -g 55807ce0e4b0ce4c2b652f48`
+`mops-cli automationConfig edit -g GROUPID`
 
 Edit the current automationConfig in your text editor
 
@@ -130,16 +132,15 @@ Edit the current automationConfig in your text editor
 ## Example Workflows
 
 ### Copying alerts configuration from one group to another
-`mops-cli alertConfigs list -g 55807ce0e4b0ce4c2b652f48 > myAlerts.json`
+`mops-cli alertConfigs list -g GROUPID > myAlerts.json`
 
-`mops-cli alertConfigs create -g 55807ce0e4b0ce4c2b652f84 -f myAlerts.json`
+`mops-cli alertConfigs create -g GROUPID -f myAlerts.json`
 
 *Note*: You can do a `mops-cli login` between these two commands to change username, API key, even hosts (i.e., move from Cloud Manager to Ops Manager)
 
-### Grabbing a host's output in CSV (for Excel, etc.)
+### Exporting host metrics into CSV formt (for Excel, R, etc.)
 Run `mops-cli host list` to get a list of all the host IDs in your group.
 Then run `mops-cli metrics csv -g GROUPID -h HOSTID > hostMetrics.csv` to put all that host's metrics into a CSV file.
-
 
 
 ## License
