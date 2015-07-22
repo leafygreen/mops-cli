@@ -16,7 +16,9 @@ You can install the mops-cli npm package directly.
 
 The core mops-cli commands are documented below.
 
-* [login](#login)
+* [configure](#configure)
+  * [login](#configure-login)
+  * [defaults](#configure-defaults)
 * [groups](#groups)
   * [list](#groups-list)
   * [delete](#groups-delete)
@@ -31,8 +33,10 @@ The core mops-cli commands are documented below.
 * [automationConfig](#automationConfig)
   * [edit](#automationConfig-edit)
 
-### login
-`mops-cli login -h HOSTNAME -p PORT -u USERNAME -a APIKEY`
+### configure
+
+#### configure login
+`mops-cli configure login -h HOSTNAME -p PORT -u USERNAME -a APIKEY`
 
 Set user credentials for MongoDB Cloud Manager | Ops Manager
 
@@ -43,6 +47,15 @@ Set user credentials for MongoDB Cloud Manager | Ops Manager
 | -P, --protocol [protocol]     | The API endpoint protocol | https |
 | -u, --user [user]     | Email address or username accessing the API          |                   |
 | -a, --apiKey [apiKey] | The specified user's API key                         |                   |
+
+#### configure defaults
+`mops-cli configure defaults -g GROUPID`
+
+Set defaults to prevent always specifying options on the command line.
+
+| Options               | Description                                          | Default           |
+| ----------------------|------------------------------------------------------|-------------------|
+| -g, --groupId [groupId] | Group identifier                         |                   |
 
 ### groups
 
