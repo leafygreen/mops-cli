@@ -38,7 +38,7 @@ function writeAlertsConfig(groupId) {
     var alertsConfig = mms.groups(groupId).alertconfigs().list();
     q.all(alertsConfig).then(
         function(alertsConfig) {
-            console.log(JSON.stringify(alertsConfig, null, 4));
+            console.log(JSON.stringify(alertsConfig.results, null, 4));
         },
         function(error) {
             console.log("Failed to get the alert config: ", error);

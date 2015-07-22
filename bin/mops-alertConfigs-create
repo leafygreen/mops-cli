@@ -42,7 +42,7 @@ function createAlertConfigs(options) {
 }
 
 function writeAlertsConfig(groupId, inputConfig) {
-    inputConfig['results'].forEach(function(alert) {
+    inputConfig.forEach(function(alert) {
         alert = removeUnnecessaryFields(alert);
         alert.groupId = groupId;
         var insertAlert = mms.post('/groups/'+groupId+'/alertConfigs', alert, function(err, response) {
