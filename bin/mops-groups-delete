@@ -5,7 +5,7 @@
 var fs = require('fs');
 var program = require('commander');
 var MMS = require('node-mms-client');
-var Views = require('../lib/views.js');
+var Schema = require('../lib/schema.js');
 
 var optionDescriptions = require('../lib/optionDescriptions');
 var MopsConfig = require('../lib/util/MopsConfig');
@@ -24,7 +24,7 @@ program
   .option('-n, --name [name]', 'show all groups visible to this user')
   .parse(process.argv);
 
-promptUtil.getRequiredOptions(Views.Group, program.opts(), config).then(
+promptUtil.getRequiredOptions(Schema.Group, program.opts(), config).then(
     function(options) {
         deleteGroup(options);
     }
