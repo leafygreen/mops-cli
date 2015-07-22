@@ -1,6 +1,6 @@
 # MOPS
 
-![MOPS Mascot](http://s1.postimg.org/7o31oh1un/Screen_Shot_2015_07_22_at_12_13_57_PM.png)
+![MOPS Mascot](http://s17.postimg.org/5xdvcqdgv/Screen_Shot_2015_07_22_at_12_13_57_PM.png)
 
 
 A command-line interface for performing [MongoDB Cloud Manager | Ops Manager](https://cloud.mongodb.com) tasks through their [Public API](http://mms.mongodb.com/help/core/api/).
