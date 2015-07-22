@@ -46,7 +46,7 @@ function editAlertConfig(options) {
         function(response) {
             editorUtil.openJSONInEditor(response).then(
                 function(response) {
-                    mms.put('/groups/'+groupId+'/alertConfigs/'+alertConfigId, JSON.parse(response)).then(
+                    mms.put('/groups/'+groupId+'/alertConfigs/'+alertConfigId, response).then(
                         function() {
                             console.log('AlertConfig published');
                         },

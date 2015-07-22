@@ -39,7 +39,7 @@ function editAutomationConfig(options) {
         function(response) {
             editorUtil.openJSONInEditor(response).then(
                 function(response) {
-                    mms.put('/groups/'+groupId+'/automationConfig', JSON.parse(response)).then(
+                    mms.put('/groups/'+groupId+'/automationConfig', response).then(
                         function() {
                             console.log('AutomationConfig published');
                         },
