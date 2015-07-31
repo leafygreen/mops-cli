@@ -13,4 +13,5 @@ program
   .command('metrics', 'Commands for Metrics resource')
   .command('alertConfigs', 'Commands for AlertConfig resource')
   .command('automationConfig', 'Commands for AutomationConfig resource')
+  .command('provision', 'Commands for resources related to provisioning machines')
   .parse(process.argv);
