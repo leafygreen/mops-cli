@@ -23,16 +23,20 @@ program
 
 promptUtil.getRequiredOptions(Schema.ProvisionedMachine, program.opts(), config)
 .then(function(options) {
-  var filePath = '~/.mops_machines/' + options.fileName;
-  var machineToPost = fs.readFileSync(filePath).toString();
-
-  var machine = mms.post('/groups/' + options.groupId + '/provisioning/sshKeys?provider=' + options.provider, machineToPost);
+  var filePath = config.provisionedMachineDirectory + options.fileName;
+  try {
+    var machineToPost = fs.readFileSync(filePath);
+  } catch (e) {
+    console.log(e);
+  }
+  var machine = mms.post('/groups/' + options.groupId + '/provisioning/provisionedMachines?provider=' + options.provider, machineToPost);
+  console.log('hi')
   q.all(machine).then(
     function(machine) {
       console.log('Machine provisioned on ' + options.provider + '.');
     },
     function(error) {
-      console.log('Machine not provision: ', error);
+      console.log('Machine not provisioned: ', error);
     }
   )
 });
