@@ -1,0 +1,38 @@
+#!/usr/bin/env node --harmony
+
+'use strict';
+
+var program = require('commander');
+
+var optionDescriptions = require('../lib/optionDescriptions');
+var mmsUtil = require('../lib/util/mmsUtil');
+var MopsConfig = require('../lib/util/MopsConfig');
+var promptUtil = require('../lib/util/promptUtil');
+var Schema = require('../lib/schema.js');
+var q = require('q');
+
+var config = new MopsConfig();
+var mms = mmsUtil.getClient(config);
+var fs = require('fs');
+
+program
+  .option('-g, --groupId [groupId]', optionDescriptions.GROUP_ID)
+  .option('-p, --provider [provider]', optionDescriptions.PROVIDER)
+  .option('-f, --fileName [fileName]', optionDescriptions.MACHINE_FILE)
+  .parse(process.argv);
+
+promptUtil.getRequiredOptions(Schema.ProvisionedMachine, program.opts(), config)
+.then(function(options) {
+  var filePath = '~/.mops_machines/' + options.fileName;
+  var machineToPost = fs.readFileSync(filePath).toString();
+
+  var machine = mms.post('/groups/' + options.groupId + '/provisioning/sshKeys?provider=' + options.provider, machineToPost);
+  q.all(machine).then(
+    function(machine) {
+      console.log('Machine provisioned on ' + options.provider + '.');
+    },
+    function(error) {
+      console.log('Machine not provision: ', error);
+    }
+  )
+});

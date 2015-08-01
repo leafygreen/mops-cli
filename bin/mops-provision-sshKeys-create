@@ -19,7 +19,6 @@ program.name = null; // addresses problem with Commander library.
                     // 'name' is reserved word.
 program
   .option('-g, --groupId [groupId]', optionDescriptions.GROUP_ID)
-  .option('-p, --provider [provider]', optionDescriptions.PROVIDER)
   .option('-n, --name [name]', optionDescriptions.SSH_KEY_NAME)
   .option('-f, --file [file]', optionDescriptions.SSH_KEY_FILE)
   .parse(process.argv);
@@ -31,8 +30,7 @@ promptUtil.getRequiredOptions(Schema.SSHKey, program.opts(), config)
     "key": fs.readFileSync(options.file).toString()
   };
 
-  var groupId = options.groupId;
-  var insertKey = mms.post('/groups/' + groupId + '/provisioning/sshKeys', sshKeyToPost);
+  var insertKey = mms.post('/groups/' + options.groupId + '/provisioning/sshKeys', sshKeyToPost);
   q.all(insertKey).then(
     function(insertAlert) {
       console.log('SSHKey inserted.');
