@@ -177,6 +177,10 @@ Licensed under the [MIT license](LICENSE-MIT "MIT License").
 * Peter Gravelle [@pcgMongo](https://github.com/pcgMongo)
 * Daiji Shikama [@deerspace](https://github.com/deerspace)
 
+## Chat with us
+
+We're happy to discuss mops in our [Gitter](https://gitter.im/leafygreen/mops-cli) chatroom
+
 ## Shout Outs
 mops-cli is a [MongoDB](http://www.mongodb.com) Skunkworks Project
 
