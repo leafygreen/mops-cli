@@ -1,5 +1,7 @@
 # MOPS
 
+[![Join the chat at https://gitter.im/leafygreen/mops-cli](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/leafygreen/mops-cli?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 ![MOPS Mascot](http://s17.postimg.org/5xdvcqdgv/Screen_Shot_2015_07_22_at_12_13_57_PM.png)
 
 
