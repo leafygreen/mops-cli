@@ -12,6 +12,7 @@ A command-line interface for performing [MongoDB Cloud Manager | Ops Manager](ht
 * Run custom analytics on permformance metrics data in Excel, R, etc.
 * Leverages [node-mms-client JS API wrapper](https://github.com/leafygreen/node-mms-client), a Node wrapper around the public API.
 
+
 [![Join the chat at https://gitter.im/leafygreen/mops-cli](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/leafygreen/mops-cli?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Code Climate](https://codeclimate.com/github/leafygreen/mops-cli/badges/gpa.svg)](https://codeclimate.com/github/leafygreen/mops-cli)
 
