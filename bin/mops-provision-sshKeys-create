@@ -25,9 +25,16 @@ program
 
 promptUtil.getRequiredOptions(Schema.SSHKey, program.opts(), config)
 .then(function(options) {
+  var keyFile = null;
+  try {
+    keyFile = fs.readFileSync(options.file).toString()
+  } catch (e) {
+    console.log(e);
+  }
+
   var sshKeyToPost = {
     "name": options.name,
-    "key": fs.readFileSync(options.file).toString()
+    "key": keyFile
   };
 
   var insertKey = mms.post('/groups/' + options.groupId + '/provisioning/sshKeys', sshKeyToPost);

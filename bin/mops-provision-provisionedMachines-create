@@ -19,24 +19,31 @@ program
   .option('-g, --groupId [groupId]', optionDescriptions.GROUP_ID)
   .option('-p, --provider [provider]', optionDescriptions.PROVIDER)
   .option('-f, --fileName [fileName]', optionDescriptions.MACHINE_FILE)
+  .option('-c, --count <count>', optionDescriptions.MACHINE_COUNT)
   .parse(process.argv);
 
 promptUtil.getRequiredOptions(Schema.ProvisionedMachine, program.opts(), config)
 .then(function(options) {
   var filePath = config.provisionedMachineDirectory + options.fileName;
+
+  var machineToPost = null;
   try {
-    var machineToPost = fs.readFileSync(filePath);
+    machineToPost = fs.readFileSync(filePath);
   } catch (e) {
     console.log(e);
   }
-  var machine = mms.post('/groups/' + options.groupId + '/provisioning/provisionedMachines?provider=' + options.provider, machineToPost);
-  console.log('hi')
+  var url = '/groups/' + options.groupId + '/provisioning/provisionedMachines?provider=' + 
+    options.provider + '&instanceCount=' + options.count;
+  console.log(url);
+
+  var machine = mms.post(url, machineToPost);
+
   q.all(machine).then(
     function(machine) {
       console.log('Machine provisioned on ' + options.provider + '.');
     },
     function(error) {
-      console.log('Machine not provisioned: ', error);
+      console.log('Machine not provisioned:\n', error.body);
     }
   )
 });
