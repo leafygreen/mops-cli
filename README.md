@@ -178,7 +178,7 @@ Licensed under the [MIT license](LICENSE-MIT "MIT License").
 ## Contributors
 * Dennis Kuczynski [@denniskuczynski](https://github.com/denniskuczynski)
 * Emily Pakulski [@ohEmily](https://github.com/ohEmily)
-* Peter Gravelle [@pcgMongo](https://github.com/pcgMongo)
+* Peter Gravelle [@PeaSeaGee](https://github.com/pcgMongo)
 * Daiji Shikama [@deerspace](https://github.com/deerspace)
 
 ## Chat with us
